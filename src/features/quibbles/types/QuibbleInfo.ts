@@ -1,4 +1,4 @@
-export default interface QuibbleInfo {
+export interface QuibbleInfo {
     id: string,
     authorName: string,
     authorId: number,

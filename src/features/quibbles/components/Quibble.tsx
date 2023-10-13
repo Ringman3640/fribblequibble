@@ -1,10 +1,10 @@
-import QuibbleInfo from "../../types/QuibbleInfo";
+import { QuibbleInfo } from "../types/QuibbleInfo";
 
 interface QuibbleProps {
   quibbleInfo: QuibbleInfo
 }
 
-export default function Quibble({ quibbleInfo }: QuibbleProps) {
+export function Quibble({ quibbleInfo }: QuibbleProps) {
   return (
     <div>
       <h2>Quibble ID: {quibbleInfo.id}</h2>

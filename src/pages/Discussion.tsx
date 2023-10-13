@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import DiscussionHead from '../components/Discussion/DiscussionHead';
-import QuibbleList from '../components/Discussion/QuibbleList';
-import QuibbleEntryBox from '../components/Discussion/QuibbleEntryBox';
+import { DiscussionHead } from '../features/discussions';
+import { QuibbleList, QuibbleEntryBox } from '../features/quibbles';
 
 export default function Discussion() {
   const {id} = useParams();

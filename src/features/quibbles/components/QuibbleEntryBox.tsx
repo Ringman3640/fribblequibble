@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
-import LoginInfoContext from "../../contexts/LoginInfoContext";
+import LoginInfoContext from "../../../contexts/LoginInfoContext";
 
 interface QuibbleEntryBoxProps {
     discussionId: string | undefined
 }
 
-export default function QuibbleEntryBox({discussionId}: QuibbleEntryBoxProps) {
+export function QuibbleEntryBox({discussionId}: QuibbleEntryBoxProps) {
     const [quibbleEntry, setQuibbleEntry] = useState<string>('');
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
     const {loginInfo} = useContext(LoginInfoContext);

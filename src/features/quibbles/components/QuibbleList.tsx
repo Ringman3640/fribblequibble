@@ -1,11 +1,11 @@
-import QuibbleInfo from "../../types/QuibbleInfo";
-import Quibble from "./Quibble";
+import { QuibbleInfo } from "../types/QuibbleInfo";
+import { Quibble } from "./Quibble";
 
 interface QuibbleListProps {
   quibbles: QuibbleInfo[]
 }
 
-export default function QuibbleList({ quibbles }: QuibbleListProps) {
+export function QuibbleList({ quibbles }: QuibbleListProps) {
   return (
     <div>
       {quibbles && quibbles.map((quibble) => {
