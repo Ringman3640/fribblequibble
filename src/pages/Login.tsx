@@ -32,16 +32,16 @@ export default function Login() {
         navigate('/');
         return;
       }
-      setUsername('');
-      setPassword('');
       setErrorMsg(json.message);
     })
     .catch(err => {
       setWaitingForAPI(false);
-      setUsername('');
-      setPassword('');
       setErrorMsg('Connection failed. Please try again later.');
       console.error(err);
+    })
+    .finally(() => {
+      setUsername('');
+      setPassword('');
     });
   }
 
