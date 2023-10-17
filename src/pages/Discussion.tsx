@@ -35,7 +35,6 @@ export default function Discussion() {
     }, []);
 
     function insertQuibble(newQuibble: QuibbleInfo): void {
-        console.log(newQuibble);
         if (!quibbles) {
             return;
         }
@@ -52,7 +51,6 @@ export default function Discussion() {
             }
             updatedQuibbles.push(quibble);
         }
-        console.log(updatedQuibbles);
 
         setQuibbles(updatedQuibbles);
     }
