@@ -24,7 +24,9 @@ export default function Discussion() {
   }
 
   if (discussionError) {
-    
+    return (
+      <h1>Could Not Access Discussion</h1>
+    );
   }
 
   return (
