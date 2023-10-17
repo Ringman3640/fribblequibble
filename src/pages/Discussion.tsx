@@ -1,21 +1,61 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { DiscussionHead } from '../features/discussions';
-import { QuibbleList, QuibbleEntryBox } from '../features/quibbles';
+import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 import useFetchBackend from '../hooks/useFetchBackend';
 import { FetchMethod } from '../types/BackendFetchInfo';
 
 export default function Discussion() {
     const {id} = useParams();
+    const [quibbles, setQuibbles] = useState<QuibbleInfo[] | undefined | null>(undefined);
     const [discussionInfo, discussionError, discussionLoading] = useFetchBackend({
         route: `/discussion/${id}`,
         method: FetchMethod.Get
     });
-    const [quibbleList, quibblesError, quibblesLoading] = useFetchBackend({
-        route: `/discussion/${id}/quibbles`,
-        method: FetchMethod.Get,
-        sendCookies: true
-    });
+
+    useEffect(() => {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion/${id}/quibbles`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(json => {
+            setQuibbles(json.quibbles);
+        })
+        .catch(err => {
+            setQuibbles(null);
+            console.log(err);
+        });
+    }, []);
+
+    function insertQuibble(newQuibble: QuibbleInfo): void {
+        console.log(newQuibble);
+        if (!quibbles) {
+            return;
+        }
+
+        let inserted = false;
+        const updatedQuibbles = new Array();
+        for (const quibble of quibbles) {
+            if (quibble.id === newQuibble.id) {
+                return;
+            }
+            if (!inserted && quibble.id < newQuibble.id) {
+                updatedQuibbles.push(newQuibble);
+                inserted = true;
+            }
+            updatedQuibbles.push(quibble);
+        }
+        console.log(updatedQuibbles);
+
+        setQuibbles(updatedQuibbles);
+    }
 
     if (discussionLoading) {
         return (
@@ -33,8 +73,8 @@ export default function Discussion() {
         <>
         <h1>Discussion Page</h1>
         <DiscussionHead discussionInfo={discussionInfo}/>
-        <QuibbleEntryBox discussionId={id}/>
-        {quibbleList && <QuibbleList quibbles={quibbleList.quibbles}/>}
+        <QuibbleEntryBox discussionId={id} handleAddQuibble={insertQuibble}/>
+        {quibbles && <QuibbleList quibbles={quibbles}/>}
         </>
     );
 }

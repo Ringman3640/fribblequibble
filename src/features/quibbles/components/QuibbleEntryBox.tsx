@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import LoginInfoContext from "../../../contexts/LoginInfoContext";
+import { QuibbleInfo } from "..";
 
 interface QuibbleEntryBoxProps {
-    discussionId: string | undefined
+    discussionId: string | undefined,
+    handleAddQuibble: (a: QuibbleInfo) => void
 }
 
-export function QuibbleEntryBox({discussionId}: QuibbleEntryBoxProps) {
+export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntryBoxProps) {
     const [quibbleEntry, setQuibbleEntry] = useState<string>('');
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
     const {loginInfo} = useContext(LoginInfoContext);
@@ -37,7 +39,7 @@ export function QuibbleEntryBox({discussionId}: QuibbleEntryBoxProps) {
             return res.json();
         })
         .then(json => {
-            console.log(json);
+            handleAddQuibble(json);
         })
         .catch(err => {
             console.error(err);
