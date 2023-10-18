@@ -57,13 +57,13 @@ export default function Discussion() {
 
     if (discussionLoading) {
         return (
-        <h1>Discussion Loading</h1>
+            <h1>Discussion Loading</h1>
         );
     }
 
     if (discussionError) {
         return (
-        <h1>Could Not Access Discussion</h1>
+            <h1>Could Not Access Discussion</h1>
         );
     }
 
