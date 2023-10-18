@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { DiscussionHead } from '../features/discussions';
-import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 import useFetchBackend from '../hooks/useFetchBackend';
 import { FetchMethod } from '../types/BackendFetchInfo';
+import { DiscussionHead } from '../features/discussions';
+import { DiscussionVote } from '../features/discussions';
+import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 
 export default function Discussion() {
     const {id} = useParams();
@@ -55,6 +56,12 @@ export default function Discussion() {
         setQuibbles(updatedQuibbles);
     }
 
+    if (!id) {
+        return (
+            <h1>Discussion ID not provided</h1>
+        );
+    }
+
     if (discussionLoading) {
         return (
             <h1>Discussion Loading</h1>
@@ -71,6 +78,7 @@ export default function Discussion() {
         <>
         <h1>Discussion Page</h1>
         <DiscussionHead discussionInfo={discussionInfo}/>
+        <DiscussionVote choices={discussionInfo.choices} discussionId={+id}/>
         <QuibbleEntryBox discussionId={id} handleAddQuibble={insertQuibble}/>
         {quibbles && <QuibbleList quibbles={quibbles}/>}
         </>
