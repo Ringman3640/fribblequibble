@@ -1,4 +1,4 @@
-import { DiscussionChoice } from "./DiscussionChoiceInfo";
+import { DiscussionChoiceInfo } from "./DiscussionChoiceInfo";
 
 export interface DiscussionInfo {
     title: string,
@@ -7,7 +7,7 @@ export interface DiscussionInfo {
     topicId: number,
     description?: string,
     conditions?: string[],
-    choices?: DiscussionChoice[]
+    choices?: DiscussionChoiceInfo[]
 }
 
 export interface DiscussionInfoError {

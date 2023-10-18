@@ -1,4 +1,4 @@
-export interface DiscussionChoice {
+export interface DiscussionChoiceInfo {
     id: number,
     name: string,
     color?: string
