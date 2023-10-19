@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import LoginInfo from "../types/LoginInfo";
-import LoginInfoContext from "../contexts/LoginInfoContext";
+import { LoginInfo } from "../types/LoginInfo";
+import { LoginInfoContext } from "../contexts/LoginInfoContext";
 
 interface AccessTokenJWT {
     id: number,

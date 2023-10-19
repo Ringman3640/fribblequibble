@@ -4,6 +4,4 @@ interface LoginInfoGood {
     accessLevel: number
 }
 
-type LoginInfo = LoginInfoGood | undefined | null;
-
-export default LoginInfo;
+export type LoginInfo = LoginInfoGood | undefined | null;

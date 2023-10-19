@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import LoginInfoContext from "../../../contexts/LoginInfoContext";
+import { LoginInfoContext } from "../../../contexts/LoginInfoContext";
 import { QuibbleInfo } from "..";
 
 interface QuibbleEntryBoxProps {

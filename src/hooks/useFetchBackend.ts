@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { BackendFetchInfo } from "../types/BackendFetchInfo";
 
-export default function useFetchBackend(fetchInfo: BackendFetchInfo) {
+export function useFetchBackend(fetchInfo: BackendFetchInfo) {
     const [data, setData] = useState<any>(undefined);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | undefined>(undefined);
