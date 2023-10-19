@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import useFetchBackend from '../hooks/useFetchBackend';
 import { FetchMethod } from '../types/BackendFetchInfo';
-import { DiscussionHead } from '../features/discussions';
-import { DiscussionVote } from '../features/discussions';
+import { DiscussionHead, DiscussionVote } from '../features/discussions';
 import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 
 export default function Discussion() {
