@@ -9,12 +9,15 @@ import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles'
 export default function Discussion() {
     const {id} = useParams();
     const [quibbles, setQuibbles] = useState<QuibbleInfo[] | undefined | null>(undefined);
+    const [quibblesLoading, setQuibblesLoading] = useState<boolean>(false);
+    const [quibblesLoadable, setQuibblesLoadable] = useState<boolean>(true);
     const [discussionInfo, discussionError, discussionLoading] = useFetchBackend({
         route: `/discussion/${id}`,
         method: FetchMethod.Get
     });
 
     useEffect(() => {
+        setQuibblesLoading(true);
         fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion/${id}/quibbles`, {
             method: 'GET',
             credentials: 'include',
@@ -28,32 +31,75 @@ export default function Discussion() {
         })
         .then(json => {
             setQuibbles(json.quibbles);
+            setQuibblesLoadable(json.quibbles.length == import.meta.env.VITE_MAX_QUIBBLES_PER_LOAD);
         })
         .catch(err => {
             setQuibbles(null);
+            setQuibblesLoadable(false);
             console.log(err);
+        })
+        .finally(() => {
+            setQuibblesLoading(false);
         });
     }, []);
+
+    function loadLaterQuibbles() {
+        if (!quibbles) {
+            return;
+        }
+
+        setQuibblesLoading(true);
+        const afterQuibbleId = quibbles[quibbles.length - 1].id
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion/${id}/quibbles?after-quibble-id=${afterQuibbleId}`, {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(json => {
+            setQuibblesLoadable(json.quibbles.length == import.meta.env.VITE_MAX_QUIBBLES_PER_LOAD);
+            for (const quibble of json.quibbles) {
+                insertQuibble(quibble);
+            }
+        })
+        .catch(err => {
+            setQuibblesLoadable(false);
+            console.log(err);
+        })
+        .finally(() => {
+            setQuibblesLoading(false);
+        });
+    }
 
     function insertQuibble(newQuibble: QuibbleInfo): void {
         if (!quibbles) {
             return;
         }
 
-        let inserted = false;
-        const updatedQuibbles = new Array();
-        for (const quibble of quibbles) {
-            if (quibble.id === newQuibble.id) {
-                return;
+        setQuibbles(prev => {
+            let inserted = false;
+            const updatedQuibbles = new Array();
+            for (const quibble of prev || quibbles) {
+                if (quibble.id === newQuibble.id) {
+                    return prev || quibbles;
+                }
+                if (!inserted && BigInt(quibble.id) < BigInt(newQuibble.id)) {
+                    updatedQuibbles.push(newQuibble);
+                    inserted = true;
+                }
+                updatedQuibbles.push(quibble);
             }
-            if (!inserted && quibble.id < newQuibble.id) {
+            if (!inserted) {
                 updatedQuibbles.push(newQuibble);
-                inserted = true;
             }
-            updatedQuibbles.push(quibble);
-        }
 
-        setQuibbles(updatedQuibbles);
+            return updatedQuibbles;
+        });
     }
 
     if (!id) {
@@ -81,6 +127,11 @@ export default function Discussion() {
         <DiscussionVote choices={discussionInfo.choices} discussionId={+id}/>
         <QuibbleEntryBox discussionId={id} handleAddQuibble={insertQuibble}/>
         {quibbles && <QuibbleList quibbles={quibbles}/>}
+        <button
+            disabled={!quibblesLoadable || quibblesLoading}
+            onClick={loadLaterQuibbles}>
+            Load More Quibbles
+        </button>
         </>
     );
 }
