@@ -37,12 +37,6 @@ export function DiscussionHead({ discussionInfo }: DiscussionHeadProps) {
         </ul>
         </>
       )}
-      <h1>Choices: </h1>
-      <ul>
-        {discussionInfo.choices && discussionInfo.choices.map((choice, index) => {
-          return <li key={index}>{choice.name}, {choice.color}</li>;
-        })}
-      </ul>
     </div>
   );
 }
