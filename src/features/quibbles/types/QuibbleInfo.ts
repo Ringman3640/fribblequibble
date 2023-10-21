@@ -4,6 +4,7 @@ export interface QuibbleInfo {
     authorId: number,
     timestamp: number,
     content: string,
+    choiceId?: number,
     condemns?: number,
     condemned?: boolean
 }
