@@ -10,7 +10,7 @@ interface AccessTokenJWT {
     exp: number
 }
 
-export default function LoginInfoWrapper({children}: React.PropsWithChildren) {
+export function LoginInfoWrapper({children}: React.PropsWithChildren) {
     const [loginInfo, setLoginInfo] = useState<LoginInfo>(undefined);
 
     useEffect(() => {

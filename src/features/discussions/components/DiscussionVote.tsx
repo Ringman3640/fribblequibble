@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { DiscussionChoiceInfo } from "..";
-import { LoginInfoContext } from "../../../contexts/LoginInfoContext";
+import { LoginInfoContext } from "../../auth";
 
 interface DiscussionVoteProps {
     choices: DiscussionChoiceInfo[],
