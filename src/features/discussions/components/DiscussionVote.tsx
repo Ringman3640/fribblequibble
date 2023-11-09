@@ -2,22 +2,62 @@ import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { DiscussionChoiceInfo } from "..";
 import { LoginInfoContext } from "../../auth";
+import { ChoiceResultsDisplay } from "./ChoiceResultsDisplay";
+import { SectionHeader } from "../../styles";
 
 interface DiscussionVoteProps {
     choices: DiscussionChoiceInfo[],
     discussionId: number
 }
 
-const ChoiceContainer = styled.div`
+const ContentContainer = styled.div`
+    margin-bottom: 30px; // TEMP
+`;
+
+const ChoicesRegion = styled.div`
     display: flex;
-    gap: 10px;
+    gap: 20px;
+`;
+
+const ChoiceButton = styled.button`
+    height: 50px;
+    min-width: 160px;
+    font-size: var(--p-font-size);
+    border-radius: 100px;
+    border-style: solid;
+    border-width: thin;
+    transition: all 0.1s;
+
+    background-color: ${props => props.theme.backgroundColor};
+    color: ${props => props.theme.primaryColorLight};
+    border-color: ${props => props.theme.primaryColorLight};
+
+    &:enabled:hover {
+        filter: brightness(90%);
+    }
+
+    &:disabled {
+        filter: brightness(90%);
+    }
+    
+    &.selected {
+        border: none;
+        filter: brightness(100%);
+
+        background-color: ${props => props.theme.secondaryColor};
+        color: ${props => props.theme.backgroundColor};
+    }
 `;
 
 export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
     const {loginInfo} = useContext(LoginInfoContext);
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
-    const [userVoted, setUserVoted] = useState<boolean>(false);
-    const [choiceVotes, setChoiceVotes] = useState(undefined);
+    const [userChoiceId, setUserChoiceId] = useState<number | undefined>(undefined);
+
+    // choiceVotes is a dictionary object where a choice ID is used to obtain
+    // a corresponding choice vote count. I ended up using the any type since
+    // using Record<number, number> wouldn't seem to add any semantic value.
+    const [choiceVotes, setChoiceVotes] = useState<any>(undefined);
 
     // Use effect to check if the user has already voted
     useEffect(() => {
@@ -38,7 +78,11 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             if (res.status === 400) {
                 return;
             }
-            setUserVoted(true);
+            getChoiceVotes();
+            return res.json();
+        })
+        .then(json => {
+            setUserChoiceId(json.choiceId);
             getChoiceVotes();
         })
         .finally(() => {
@@ -58,7 +102,7 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
         })
         .then(() => {
             getChoiceVotes();
-            setUserVoted(true);
+            setUserChoiceId(choiceId);
         })
         .finally(() => {
             setWaitingAPI(false);
@@ -82,28 +126,34 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
                 newChoiceVotes[choiceVote.choiceId] = choiceVote.voteCount;
             }
             setChoiceVotes(newChoiceVotes);
-        })
-        .finally(() => {
-            setUserVoted(true);
         });
     }
 
+    if (choices.length === 0) {
+        return (
+            <ContentContainer>
+                <h3>Vote</h3>
+                <p>This discussion has no vote options</p>
+            </ContentContainer>
+        )
+    }
+
     return (
-        <ChoiceContainer>
-            {choices.map(choice => {
-                return (
-                    <div key={choice.id}>
-                        <button
-                            disabled={!loginInfo || waitingAPI || userVoted}
-                            onClick={() => sendUserVote(choice.id)}>
-                            {choice.name}
-                        </button>
-                        {choiceVotes && <p>
-                            Votes: {choiceVotes[choice.id]}
-                        </p>}
-                    </div>
-                );
-            })}
-        </ChoiceContainer>
+        <ContentContainer>
+            <SectionHeader>Vote</SectionHeader>
+            <ChoicesRegion>
+                {choices.map(choice =>
+                <div key={choice.id}>
+                    <ChoiceButton
+                        className={userChoiceId === choice.id ? 'selected' : undefined}
+                        disabled={!loginInfo || waitingAPI || !!userChoiceId}
+                        onClick={() => sendUserVote(choice.id)}>
+                        {choice.name}
+                    </ChoiceButton>
+                    <ChoiceResultsDisplay voteCount={choiceVotes && choiceVotes[choice.id]}/>
+                </div>
+                )}
+            </ChoicesRegion>
+        </ContentContainer>
     );
 }

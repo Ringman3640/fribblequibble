@@ -3,7 +3,7 @@ export interface QuibbleInfo {
     authorName: string,
     authorId: number,
     timestamp: number,
-    content: string,
+    content: string | null,
     choiceId?: number,
     condemns?: number,
     condemned?: boolean

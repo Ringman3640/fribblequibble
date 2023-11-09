@@ -4,6 +4,7 @@ import { useFetchBackend } from '../hooks/useFetchBackend';
 import { FetchMethod } from '../types/BackendFetchInfo';
 import { DiscussionHead, DiscussionVote } from '../features/discussions';
 import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
+import { SectionHeader } from '../features/styles';
 
 export default function Discussion() {
     const {id} = useParams();
@@ -121,11 +122,15 @@ export default function Discussion() {
 
     return (
         <>
-        <h1>Discussion Page</h1>
-        <DiscussionHead discussionInfo={discussionInfo}/>
+        <DiscussionHead discussionInfo={discussionInfo} discussionId={+id}/>
         <DiscussionVote choices={discussionInfo.choices} discussionId={+id}/>
+        <SectionHeader>Discussion</SectionHeader>
         <QuibbleEntryBox discussionId={id} handleAddQuibble={insertQuibble}/>
-        {quibbles && <QuibbleList quibbles={quibbles}/>}
+        {quibbles &&
+        <QuibbleList
+            quibbles={quibbles}
+            discussionChoices={discussionInfo.choices}
+        />}
         <button
             disabled={!quibblesLoadable || quibblesLoading}
             onClick={loadLaterQuibbles}>
