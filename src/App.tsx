@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { LoginInfoWrapper } from './features/auth';
 import { ThemeInfoWrapper } from './components/ThemeInfoWrapper.tsx';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Home from './pages/Home.tsx'
 import DiscussionList from './pages/DiscussionList.tsx'
 import Discussion from './pages/Discussion.tsx'
@@ -25,6 +25,15 @@ const BackgroundColor = styled.div`
     background-color: ${props => props.theme.backgroundColor};
 `;
 
+const DefaultFontThemes = createGlobalStyle`
+    :root {
+        color: ${props => props.theme.primaryColorLight};
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: ${props => props.theme.primaryColor};
+    }
+`;
+
 function AppWrapperGrouping({children}: React.PropsWithChildren) {
     return (
         <LoginInfoWrapper>
@@ -41,6 +50,7 @@ export default function App() {
     return (
         <AppWrapperGrouping>
             <BackgroundColor/>
+            <DefaultFontThemes/>
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/discussion' element={<DiscussionList />} />
