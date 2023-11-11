@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { QuibbleInfo } from "../types/QuibbleInfo";
 import { QuibbleCondemner } from "./QuibbleCondemner";
+import { formatTimestamp } from "../../../scripts/formatTimestamp";
 import styled from "styled-components";
 
 const QuibbleContainer = styled.div`
@@ -49,7 +50,7 @@ export function Quibble({ quibbleInfo, userChoice }: QuibbleProps) {
             </span>
             <ContentText>{quibbleInfo.content}</ContentText>
             <DateCondemnRow>
-                <p><small>1 hr ago</small></p>
+                <p><small>{formatTimestamp(quibbleInfo.timestamp)}</small></p>
                 <p>{quibbleInfo.condemns}</p>
             </DateCondemnRow>
         </QuibbleContainer>
