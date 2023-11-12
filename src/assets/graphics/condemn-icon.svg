@@ -3,6 +3,7 @@
     <circle id="eye-left" r="2" cx="10" cy="12" fill="currentColor">
         <animate
             attributeName="cy"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="12.2"/>
@@ -10,6 +11,7 @@
     <circle id="eye-right" r="2" cx="22" cy="12" fill="currentColor">
         <animate
             attributeName="cy"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="12.2"/>
@@ -17,12 +19,14 @@
     <path id="mouth" d="M8.130967,18.820509c0,0,2.775702-.510082,7.869032-.510082s7.869032.510082,7.869032.510082" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
         <animate
             attributeName="d"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="M10.130968,20.347478c0,0,.775701-3.366637,5.869031-3.366637s5.869031,3.366637,5.869031,3.366637"/>
         <animateTransform 
             attributeName="transform"
             type="translate"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             from="0 1"
@@ -31,11 +35,13 @@
     <path id="eyebrow-left" d="M8,7l5,1" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0" stroke-linecap="round">
         <animate
             attributeName="opacity"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="1"/>
         <animate
             attributeName="d"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="M8,8.5l5,3"/>
@@ -43,11 +49,13 @@
     <path id="eyebrow-right" d="M24,7l-5,1" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0" stroke-linecap="round">
         <animate
             attributeName="opacity"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="1"/>
         <animate
             attributeName="d"
+            begin="indefinite"
             dur="0.2s"
             fill="freeze"
             to="M24,8.5l-5,3"/>
