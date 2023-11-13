@@ -27,7 +27,20 @@ const ContentText = styled.p`
 
 const DateCondemnRow = styled.span`
     display: flex;
-    justify-content: space-between;
+`;
+
+const DateDisplay = styled.p`
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+`;
+
+const CondemnCountDisplay = styled.p`
+    align-items: center;
+    min-width: 50px;
+    margin-left: 8px;
+    margin-top: auto;
+    margin-bottom: auto;
 `;
 
 interface QuibbleProps {
@@ -50,27 +63,13 @@ export function Quibble({ quibbleInfo, userChoice }: QuibbleProps) {
             </span>
             <ContentText>{quibbleInfo.content}</ContentText>
             <DateCondemnRow>
-                <p><small>{formatTimestamp(quibbleInfo.timestamp)}</small></p>
-                <p>{quibbleInfo.condemns}</p>
+                <DateDisplay><small>{formatTimestamp(quibbleInfo.timestamp)}</small></DateDisplay>
+                <QuibbleCondemner
+                    quibbleInfo={quibbleInfo}
+                    handleCondemn={increaseCondemnCount}
+                />
+                <CondemnCountDisplay>{condemnCount || ''}</CondemnCountDisplay>
             </DateCondemnRow>
         </QuibbleContainer>
-    );
-
-    return (
-        <div>
-            <h2>Quibble ID: {quibbleInfo.id}</h2>
-            <h2>Author: {quibbleInfo.authorName}</h2>
-            <h2>Author ID: {quibbleInfo.authorId}</h2>
-            <h2>Date: {quibbleInfo.timestamp}</h2>
-            <h2>Choice ID: {quibbleInfo.choiceId || 'None'}</h2>
-            <h2>Content: {quibbleInfo.content}</h2>
-            <h2>Condemns: {condemnCount}</h2>
-            <h2>Condemned: {quibbleInfo.condemned ? "True" : "False"}</h2>
-            <QuibbleCondemner
-                quibbleInfo={quibbleInfo}
-                handleCondemn={increaseCondemnCount}
-            />
-            <p><br /></p>
-        </div>
     );
 }

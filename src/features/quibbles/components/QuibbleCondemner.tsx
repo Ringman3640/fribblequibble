@@ -1,6 +1,24 @@
 import { useContext, useState } from "react";
 import { QuibbleInfo } from "..";
 import { LoginInfoContext } from "../../auth";
+import styled from "styled-components";
+import { CondemnIcon } from "./CondemnIcon";
+
+const CondemnButton = styled.button`
+    background-color: transparent;
+    width: 30px;
+    height: auto;
+    padding: 0px;
+    border: 0px;
+    border-radius: 1000px;
+
+    &:enabled {
+        cursor: pointer;
+    }
+    &:disabled {
+        background-color: transparent;
+    }
+`;
 
 interface QuibbleCondemnerProps {
     quibbleInfo: QuibbleInfo,
@@ -9,8 +27,8 @@ interface QuibbleCondemnerProps {
 
 export function QuibbleCondemner({ quibbleInfo, handleCondemn }: QuibbleCondemnerProps) {
     const {loginInfo} = useContext(LoginInfoContext);
-    const [isCondemned, setIsCondemned] = useState(quibbleInfo.condemned);
-    const [waitingForApi, setWaitingForAPI] = useState(false);
+    const [isCondemned, setIsCondemned] = useState<boolean | undefined>(quibbleInfo.condemned);
+    const [waitingForApi, setWaitingForAPI] = useState<boolean>(false);
 
     function clickHandler() {
         setWaitingForAPI(true);
@@ -38,10 +56,10 @@ export function QuibbleCondemner({ quibbleInfo, handleCondemn }: QuibbleCondemne
     }
 
     return (
-        <button 
+        <CondemnButton 
             disabled={isCondemned || !loginInfo || waitingForApi} 
             onClick={clickHandler}>
-            Condemn
-        </button>
+            <CondemnIcon active={isCondemned || false}/>
+        </CondemnButton>
     );
 }
