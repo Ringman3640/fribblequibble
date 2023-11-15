@@ -22,7 +22,6 @@ export function SignUpForm() {
             return res.json();
         })
         .then(json => {
-            console.log(json);
             if (!('error' in json)) {
                 navigate('/');
                 return;
