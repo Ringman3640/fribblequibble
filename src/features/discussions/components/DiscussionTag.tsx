@@ -12,6 +12,10 @@ const TagContainer = styled.a`
 
     background-color: ${props => props.theme.secondaryColor};
     color: ${props => props.theme.backgroundColorLight};
+
+    &:visited {
+        color: ${props => props.theme.backgroundColorLight};
+    }
 `;
 
 interface DiscussionTagProps {
