@@ -18,7 +18,7 @@ const BaseEntryBox = css`
 
 const UnauthorizedEntryBox = styled.div`
     ${BaseEntryBox};
-    padding: 20px;
+    padding: var(--large-text-padding);
 `;
 
 const EntryBoxForm = styled.form`
@@ -31,8 +31,7 @@ const EntryBoxForm = styled.form`
         height: ${MIN_ENTRY_BOX_HEIGHT + 'px'};
         border: none;
         outline: none;
-        padding: 20px;
-        padding-bottom: 20px;
+        padding: var(--large-text-padding);
         overflow: hidden;
 
         background-color: ${props => props.theme.backgroundColorLight};

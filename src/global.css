@@ -140,6 +140,8 @@ table {
 	--list-indent-width: 10px;
 
 	--medium-border-radius: 26px;
+
+	--large-text-padding: 20px;
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Kreon';
