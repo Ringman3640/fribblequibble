@@ -6,6 +6,7 @@ import { DiscussionHead, DiscussionVote } from '../features/discussions';
 import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 import { SectionHeader } from '../features/styles';
 import { DiscussionBlobsIcon } from '../features/discussions/components/DiscussionBlobsIcon';
+import { VisibilityTrigger } from '../components/VisibilityTrigger';
 import styled from 'styled-components';
 
 const ContentContainer = styled.div`
@@ -24,49 +25,33 @@ const BlobIconContainer = styled.div`
 
 export default function Discussion() {
     const {id} = useParams();
-    const [quibbles, setQuibbles] = useState<QuibbleInfo[] | undefined | null>(undefined);
+    const [quibbles, setQuibbles] = useState<QuibbleInfo[]>([]);
     const [quibblesLoading, setQuibblesLoading] = useState<boolean>(false);
-    const [quibblesLoadable, setQuibblesLoadable] = useState<boolean>(true);
+    const [quibblesLoadable, setQuibblesLoadable] = useState<boolean>(false);
     const [discussionInfo, discussionError, discussionLoading] = useFetchBackend({
         route: `/discussion/${id}`,
         method: FetchMethod.Get
     });
 
     useEffect(() => {
-        setQuibblesLoading(true);
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion/${id}/quibbles`, {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => {
-            return res.json();
-        })
-        .then(json => {
-            setQuibbles(json.quibbles);
-            setQuibblesLoadable(json.quibbles.length == import.meta.env.VITE_MAX_QUIBBLES_PER_LOAD);
-        })
-        .catch(err => {
-            setQuibbles(null);
-            setQuibblesLoadable(false);
-            console.log(err);
-        })
-        .finally(() => {
-            setQuibblesLoading(false);
-        });
+        loadNextQuibbles(true);
     }, []);
 
-    function loadLaterQuibbles() {
-        if (!quibbles) {
+    function loadNextQuibbles(initialLoad?: boolean) {
+        if (quibblesLoading) {
             return;
         }
-
+        if (!quibblesLoadable && !initialLoad) {
+            return;
+        }
         setQuibblesLoading(true);
-        const afterQuibbleId = quibbles[quibbles.length - 1].id
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion/${id}/quibbles?after-quibble-id=${afterQuibbleId}`, {
+
+        let fetchURL = `${import.meta.env.VITE_BACKEND_URL}/discussion/${id}/quibbles`;
+        if (quibbles.length > 0) {
+            const afterQuibbleId = quibbles[quibbles.length - 1].id;
+            fetchURL += `?after-quibble-id=${afterQuibbleId}`;
+        }
+        fetch(fetchURL, {
             method: 'GET',
             credentials: 'include',
             headers: {
@@ -118,6 +103,13 @@ export default function Discussion() {
         });
     }
 
+    function onLoadVisibilityTrigger(isVisible: boolean) {
+        if (!isVisible) {
+            return;
+        }
+        loadNextQuibbles();
+    }
+
     if (!id) {
         return (
             <h1>Discussion ID not provided</h1>
@@ -150,11 +142,7 @@ export default function Discussion() {
                 quibbles={quibbles}
                 discussionChoices={discussionInfo.choices}
             />}
-            <button
-                disabled={!quibblesLoadable || quibblesLoading}
-                onClick={loadLaterQuibbles}>
-                Load More Quibbles
-            </button>
+            {quibblesLoadable && <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
         </ContentContainer>
     );
 }

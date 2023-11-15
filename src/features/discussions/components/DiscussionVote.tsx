@@ -1,18 +1,10 @@
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { DiscussionChoiceInfo } from "..";
+import { ChoiceVoteInfo } from "..";
 import { LoginInfoContext } from "../../auth";
 import { ChoiceResultsDisplay } from "./ChoiceResultsDisplay";
 import { SectionHeader } from "../../styles";
-
-interface DiscussionVoteProps {
-    choices: DiscussionChoiceInfo[],
-    discussionId: number
-}
-
-const ContentContainer = styled.div`
-    margin-bottom: 30px; // TEMP
-`;
 
 const ChoicesRegion = styled.div`
     display: flex;
@@ -49,19 +41,25 @@ const ChoiceButton = styled.button`
     }
 `;
 
+interface DiscussionVoteProps {
+    choices: DiscussionChoiceInfo[],
+    discussionId: number
+}
+
 export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
     const {loginInfo} = useContext(LoginInfoContext);
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
     const [userChoiceId, setUserChoiceId] = useState<number | undefined>(undefined);
 
     // choiceVotes is a dictionary object where a choice ID is used to obtain
-    // a corresponding choice vote count. I ended up using the any type since
-    // using Record<number, number> wouldn't seem to add any semantic value.
-    const [choiceVotes, setChoiceVotes] = useState<any>(undefined);
+    // a corresponding choice vote count and percent.
+    const [choiceVotes, setChoiceVotes] = useState<Record<number, ChoiceVoteInfo> | undefined>(undefined);
 
     // Use effect to check if the user has already voted
     useEffect(() => {
+        console.log('entered useEffect');
         if (!loginInfo) {
+            console.log('loginInfo was null');
             return;
         }
         setWaitingAPI(true);
@@ -74,18 +72,26 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             }
         })
         .then(res => {
+            console.log('Fetch recieved');
             // API returns an error response if the user has not voted yet
             if (res.status === 400) {
-                return;
+                return Promise.reject();
             }
             getChoiceVotes();
             return res.json();
         })
         .then(json => {
+            console.log('Res JSON processed', json);
             setUserChoiceId(json.choiceId);
             getChoiceVotes();
         })
+        .catch(() => {
+            console.log('error');
+            // This catch only exists to silence an error if the first promise
+            // handler returns Promise.reject(). It servers no other purpose.
+        })
         .finally(() => {
+            console.log('finally');
             setWaitingAPI(false);
         });
     }, []);
@@ -121,25 +127,37 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             return res.json();
         })
         .then(json => {
-            const newChoiceVotes: any = {};
-            for (const choiceVote of json.choiceVotes) {
-                newChoiceVotes[choiceVote.choiceId] = choiceVote.voteCount;
-            }
-            setChoiceVotes(newChoiceVotes);
+            processUserChoiceVotes(json.choiceVotes);
         });
+    }
+
+    function processUserChoiceVotes(choiceVotes: any) {
+        let totalVotes = 0;
+        for (const choiceVote of choiceVotes) {
+            totalVotes += choiceVote.voteCount;
+        }
+
+        const newChoiceVotes: Record<number, ChoiceVoteInfo> = {};
+        for (const choiceVote of choiceVotes) {
+            newChoiceVotes[choiceVote.choiceId] = {
+                voteCount: choiceVote.voteCount,
+                votePercent: Math.ceil(choiceVote.voteCount / totalVotes * 100)
+            }
+        }
+        setChoiceVotes(newChoiceVotes);
     }
 
     if (choices.length === 0) {
         return (
-            <ContentContainer>
+            <div>
                 <h3>Vote</h3>
                 <p>This discussion has no vote options</p>
-            </ContentContainer>
+            </div>
         )
     }
 
     return (
-        <ContentContainer>
+        <div>
             <SectionHeader>Vote</SectionHeader>
             <ChoicesRegion>
                 {choices.map(choice =>
@@ -150,10 +168,10 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
                         onClick={() => sendUserVote(choice.id)}>
                         {choice.name}
                     </ChoiceButton>
-                    <ChoiceResultsDisplay voteCount={choiceVotes && choiceVotes[choice.id]}/>
+                    {choiceVotes && <ChoiceResultsDisplay voteInfo={choiceVotes[choice.id]}/>}
                 </div>
                 )}
             </ChoicesRegion>
-        </ContentContainer>
+        </div>
     );
 }
