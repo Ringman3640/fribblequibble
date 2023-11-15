@@ -76,7 +76,7 @@ export function LoginForm() {
         })
         .catch(err => {
             setWaitingForAPI(false);
-            setErrorMsg('Connection failed. Please try again later.');
+            setErrorMsg('Connection failed; please try again later');
             console.error(err);
         })
         .finally(() => {

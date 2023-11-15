@@ -32,6 +32,13 @@ const DefaultFontThemes = createGlobalStyle`
     h1, h2, h3, h4, h5, h6 {
         color: ${props => props.theme.primaryColor};
     }
+    a {
+        color: ${props => props.theme.secondaryColor};
+
+        &:visited {
+            color: ${props => props.theme.tertiaryColor};
+        }
+    }
 `;
 
 function AppWrapperGrouping({children}: React.PropsWithChildren) {
