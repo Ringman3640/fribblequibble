@@ -17,6 +17,7 @@ const EntryBoxLabel = styled.label`
 
 const EntryBox = styled.input`
     display: block;
+    width: 300px;
     padding: var(--medium-text-padding);
     margin-bottom: 30px;
     border: 0px;
