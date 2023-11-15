@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { LoginInfoContext } from "../../auth";
 import { QuibbleInfo } from "..";
+import { baseSmallButton } from "../../styles";
 import { styled, css } from "styled-components";
 
 const MAX_QUIBBLE_LEN = import.meta.env.VITE_QUIBBLE_MAX_LEN;
@@ -52,31 +53,11 @@ const CharCounter = styled.p`
 `;
 
 const InputButton = styled.input`
+    ${baseSmallButton}
     position: absolute;
     right: 0px;
     bottom: 0px;
-    font-size: var(--p-font-size);
-    border: none;
-    border-radius: 0.6rem;
-    padding-top: 0.3rem;
-    padding-bottom: 0.3rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    margin-right: 20px;
-    margin-bottom: 10px;
-    transition: background-color 0.1s;
-
-    background-color: ${props => props.theme.secondaryColor};
-    color: ${props => props.theme.backgroundColorLight};
-
-    &:enabled:hover {
-        cursor: pointer;
-    }
-
-    &:disabled {
-        background-color: ${props => props.theme.primaryColorLight};
-    }
-`
+`;
 
 interface QuibbleEntryBoxProps {
     discussionId: string | undefined,
