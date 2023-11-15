@@ -52,13 +52,11 @@ export function UsernamePasswordForm({submitText, onSubmit}: UsernamePasswordFor
         }
 
         setWaitingForAPI(true);
-        console.log('Entering await');
         await onSubmit({
             username: username,
             password: password,
             setErrorMsg: setErrorMsg
         });
-        console.log('Exited await');
         setWaitingForAPI(false);
         setUsername('');
         setPassword('');
