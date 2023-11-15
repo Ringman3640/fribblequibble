@@ -6,6 +6,7 @@ import Home from './pages/Home.tsx'
 import DiscussionList from './pages/DiscussionList.tsx'
 import Discussion from './pages/Discussion.tsx'
 import Login from './pages/Login.tsx';
+import SignUp from './pages/SignUp.tsx';
 import './global.css';
 
 const MainContentRegion = styled.div`
@@ -63,6 +64,7 @@ export default function App() {
                 <Route path='/discussion' element={<DiscussionList />} />
                 <Route path='/discussion/:id' element={<Discussion />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/signup' element={<SignUp />} />
             </Routes>
         </AppWrapperGrouping>
     );
