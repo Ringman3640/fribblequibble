@@ -8,7 +8,7 @@ const MIN_ENTRY_BOX_HEIGHT = 100;
 
 const BaseEntryBox = css`
     width: 100%;
-    border-radius: 26px;
+    border-radius: var(--medium-border-radius);
     overflow: hidden;
     font-size: var(--p-font-size);
 
