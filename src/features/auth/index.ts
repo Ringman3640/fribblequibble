@@ -1,4 +1,5 @@
 export * from './components/LoginInfoWrapper'
 export * from './components/LoginForm'
+export * from './components/SignUpForm'
 export * from './contexts/LoginInfoContext'
 export * from './types/LoginInfo'
