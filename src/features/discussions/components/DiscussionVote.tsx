@@ -94,7 +94,7 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             console.log('finally');
             setWaitingAPI(false);
         });
-    }, []);
+    }, [loginInfo]);
 
     function sendUserVote(choiceId: number) {
         setWaitingAPI(true);
