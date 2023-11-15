@@ -137,11 +137,31 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             totalVotes += choiceVote.voteCount;
         }
 
+        // Set estimate vote percents
+        let totalPercent = 0;
         const newChoiceVotes: Record<number, ChoiceVoteInfo> = {};
         for (const choiceVote of choiceVotes) {
             newChoiceVotes[choiceVote.choiceId] = {
                 voteCount: choiceVote.voteCount,
                 votePercent: Math.ceil(choiceVote.voteCount / totalVotes * 100)
+            }
+            totalPercent += newChoiceVotes[choiceVote.choiceId].votePercent;
+        }
+
+        // Adjust percents if total vote percent is not 100%
+        // Not a good distribution algorithm but will work for now
+        // Could potentially cause a negative percent
+        for (const choiceId in newChoiceVotes) {
+            if (totalPercent === 100) {
+                break;
+            }
+            if (totalPercent > 100) {
+                --totalPercent;
+                --newChoiceVotes[choiceId].votePercent;
+            }
+            else {
+                ++totalPercent;
+                ++newChoiceVotes[choiceId].votePercent;
             }
         }
         setChoiceVotes(newChoiceVotes);
