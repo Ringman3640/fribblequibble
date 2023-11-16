@@ -1,4 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { LoginInfoContext } from "../../auth";
 import { QuibbleInfo } from "..";
 import { baseSmallButton } from "../../styles";
@@ -137,7 +138,7 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
     if (loginInfo === null) {
         return (
             <UnauthorizedEntryBox>
-                Login or signup to join the discussion
+                <Link to='/login'>Login</Link> or <Link to='/signup'>sign up</Link> to join the discussion
             </UnauthorizedEntryBox>
         );
     }
