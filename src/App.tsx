@@ -1,9 +1,9 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom';
 import { LoginInfoWrapper } from './features/auth';
 import { ThemeInfoWrapper } from './components/ThemeInfoWrapper.tsx';
 import styled, { createGlobalStyle } from 'styled-components';
-import Home from './pages/Home.tsx'
-import DiscussionList from './pages/DiscussionList.tsx'
+import Home from './pages/Home.tsx';
+import DiscussionSearch from './pages/DiscussionSearch.tsx';
 import Discussion from './pages/Discussion.tsx'
 import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
@@ -40,6 +40,9 @@ const DefaultFontThemes = createGlobalStyle`
             color: ${props => props.theme.tertiaryColor};
         }
     }
+    input:focus {
+        outline-color: ${props => props.theme.primaryColorLight};
+    }
 `;
 
 function AppWrapperGrouping({children}: React.PropsWithChildren) {
@@ -61,7 +64,7 @@ export default function App() {
             <DefaultFontThemes/>
             <Routes>
                 <Route path='/' element={<Home />} />
-                <Route path='/discussion' element={<DiscussionList />} />
+                <Route path='/discussion' element={<DiscussionSearch />} />
                 <Route path='/discussion/:id' element={<Discussion />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignUp />} />
