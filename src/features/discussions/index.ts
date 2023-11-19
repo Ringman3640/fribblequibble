@@ -1,7 +1,9 @@
+export * from './components/DiscussionPostLoader';
 export * from './components/DiscussionPostList';
 export * from './components/DiscussionHead';
 export * from './components/DiscussionVote';
 export * from './components/DiscussionBlobsIcon'
+export * from './components/SortMethodSelector'
 
 export * from './types/DiscussionPostInfo';
 export * from './types/DiscussionSortMethod';
