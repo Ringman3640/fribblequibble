@@ -1,7 +1,26 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 import { DiscussionPostLoader, DiscussionSortMethod, SortMethodSelector } from "../features/discussions";
+import { styled, css } from "styled-components";
+
+const SearchSortBar = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 40px;
+    row-gap: 10px;
+`;
+
+const SearchBarStyle = css`
+    flex-shrink: 1;
+    flex-grow: 1;
+    min-width: 100px;
+`;
+
+const SortBarStyle = css`
+    margin-left: auto;
+`;
 
 // Query Parameters:
 //   - search: The search term used to filter the discussion retrieval
@@ -19,11 +38,18 @@ export default function DiscussionSearch() {
     return (
         <>
         <h1>Discussions</h1>
-        <SearchBar onSearch={handleSearch}/>
-        <SortMethodSelector
-            currentMethod={sortMethod}
-            handleSortChange={newSort => setSortMethod(newSort)}
-        />
+        <SearchSortBar>
+            <SearchBar
+                onSearch={handleSearch}
+                formCss={SearchBarStyle}
+            />
+            <SortMethodSelector
+                currentMethod={sortMethod}
+                handleSortChange={newSort => setSortMethod(newSort)}
+                customStyle={SortBarStyle}
+            />
+        </SearchSortBar>
+        
         <DiscussionPostLoader
             sortMethod={sortMethod}
             search={searchTerm}
