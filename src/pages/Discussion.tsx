@@ -5,7 +5,7 @@ import { FetchMethod } from '../types/BackendFetchInfo';
 import { DiscussionHead, DiscussionVote } from '../features/discussions';
 import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 import { SectionHeader } from '../features/styles';
-import { DiscussionBlobsIcon } from '../features/discussions/components/DiscussionBlobsIcon';
+import { DiscussionBlobsIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
 import styled from 'styled-components';
 

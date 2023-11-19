@@ -1,8 +1,8 @@
 import { useContext, useState } from "react";
 import { QuibbleInfo } from "..";
 import { LoginInfoContext } from "../../auth";
+import { CondemnIcon } from "../../icons";
 import styled from "styled-components";
-import { CondemnIcon } from "./CondemnIcon";
 
 const CondemnButton = styled.button`
     background-color: transparent;
