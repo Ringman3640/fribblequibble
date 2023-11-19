@@ -58,6 +58,8 @@ const InputButton = styled.input`
     position: absolute;
     right: 0px;
     bottom: 0px;
+    margin-right: 20px;
+    margin-bottom: 10px;
 `;
 
 interface QuibbleEntryBoxProps {

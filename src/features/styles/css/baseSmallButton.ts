@@ -8,8 +8,6 @@ export const baseSmallButton = css`
     padding-bottom: 0.3rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    margin-right: 20px;
-    margin-bottom: 10px;
     transition: background-color 0.1s;
 
     background-color: ${props => props.theme.secondaryColor};
