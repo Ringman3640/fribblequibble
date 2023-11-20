@@ -9,7 +9,7 @@ const PostConatiner = styled.div`
     display: flex;
     padding: var(--large-text-padding);
     border-radius: var(--large-border-radius);
-    margin-top: 10px;
+    margin-bottom: 10px;
     overflow: hidden;
 
     background-color: ${props => props.theme.backgroundColorLight};

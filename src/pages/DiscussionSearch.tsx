@@ -26,6 +26,8 @@ const SearchSortBar = styled.div`
     justify-content: space-between;
     column-gap: 40px;
     row-gap: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
 `;
 
 const SearchBarStyle = css`
