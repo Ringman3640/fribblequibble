@@ -1,8 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 import { DiscussionPostLoader, DiscussionSortMethod, SortMethodSelector } from "../features/discussions";
 import { styled, css } from "styled-components";
+import { FetchMethod } from "../types/BackendFetchInfo";
+
+const ErrorScreen = styled.h1`
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+`;
+
+const TopicTitle = styled.h1`
+    & > em {
+        color: ${props => props.theme.secondaryColor};
+    }
+`;
 
 const SearchSortBar = styled.div`
     display: flex;
@@ -27,20 +43,88 @@ const SortBarStyle = css`
 //   - topic-id: The topic ID of discussions to retrieve
 
 export default function DiscussionSearch() {
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const [sortMethod, setSortMethod] = useState<DiscussionSortMethod>(DiscussionSortMethod.Acvitity);
     const [searchTerm, setSearchTerm] = useState<string>(searchParams.get('search') || '');
+    const [topicId, setTopicId] = useState<string>(searchParams.get('topic-id') || '');
+    const [topicName, setTopicName] = useState<string | undefined | null>(undefined);
+
+    useEffect(() => {
+        setSearchTerm(searchParams.get('search') || '');
+        setTopicId(searchParams.get('topic-id') || '');
+    }, [searchParams]);
+
+    useEffect(() => {
+        if (topicId) {
+            getTopicName();
+        }
+    }, [topicId]);
+
+    function getTopicName() {
+        if (!topicId || !Number.isInteger(+topicId)) {
+            setTopicName(null);
+            return;
+        }
+
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/topic/${topicId}`, {
+            method: FetchMethod.Get,
+            credentials: 'omit',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(json => {
+            if ('error' in json) {
+                throw json.message;
+            }
+            setTopicName(json.topicName);
+            console.log(json.topicName);
+        })
+        .catch(err => {
+            console.error(err);
+            setTopicName(null);
+        });
+    }
 
     function handleSearch(searchPhrase: string): void {
-        setSearchTerm(searchPhrase);
+        if (searchPhrase == (searchParams.get('search') || '')) {
+            return;
+        }
+
+        let updatedQueryParams = new URLSearchParams(searchParams.toString());
+        if (searchPhrase) {
+            updatedQueryParams.set('search', searchPhrase);
+        }
+        else {
+            updatedQueryParams.delete('search');
+        }
+        setSearchParams(updatedQueryParams.toString());
+    }
+
+    if (topicId && topicName === undefined) {
+        return <></>;
+    }
+
+    if (topicId && topicName === null) {
+        return (
+            <ErrorScreen>
+                Topic ID {topicId} does not exist
+            </ErrorScreen>
+        );
     }
 
     return (
         <>
-        <h1>Discussions</h1>
+        {!topicName && <h1>Discussions</h1>}
+        {topicName && <TopicTitle>Discussions - <em>{topicName}</em></TopicTitle>}
         <SearchSortBar>
             <SearchBar
                 onSearch={handleSearch}
+                defaultValue={searchTerm}
                 formCss={SearchBarStyle}
             />
             <SortMethodSelector
@@ -49,10 +133,10 @@ export default function DiscussionSearch() {
                 customStyle={SortBarStyle}
             />
         </SearchSortBar>
-        
         <DiscussionPostLoader
             sortMethod={sortMethod}
             search={searchTerm}
+            topicId={topicId ? +topicId : undefined}
         />
         </>
     );

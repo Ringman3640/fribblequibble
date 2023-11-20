@@ -4,14 +4,17 @@ import { DiscussionPostInfo, DiscussionPostList, DiscussionSortMethod } from "..
 interface DiscussionPostLoaderProps {
     sortMethod: DiscussionSortMethod,
     search?: string,
-    topicId?: number
+    topicId?: number,
+    retrieveCount?: number,
+    maxRetrieves?: number
 }
 
-export function DiscussionPostLoader({sortMethod, search, topicId}: DiscussionPostLoaderProps) {
+export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount, maxRetrieves}: DiscussionPostLoaderProps) {
     const [discussions, setDiscussions] = useState<DiscussionPostInfo[]>([]);
     const [discussionsLoading, setDiscussionsLoading] = useState<boolean>(false);
     const [discussionsLoadable, setDiscussionsLoadable] = useState<boolean>(false);
     const [getDiscussions, setGetDiscussions] = useState<boolean>(false);
+    const [totalRetrieves, setTotalRetrieves] = useState<number>(0);
     const discussionIndex = useRef<number>(0);
     const searchTerm = useRef<string>('');
 
@@ -39,18 +42,25 @@ export function DiscussionPostLoader({sortMethod, search, topicId}: DiscussionPo
         if (discussionsLoading) {
             return;
         }
+        if (maxRetrieves && totalRetrieves >= maxRetrieves) {
+            return;
+        }
         if (!discussionsLoadable && !initialLoad) {
             return;
         }
         setDiscussionsLoading(true);
+        setTotalRetrieves(totalRetrieves + 1);
 
+        let count = retrieveCount;
+        if (count && count > import.meta.env.VITE_MAX_DISCUSSIONS_PER_LOAD) {
+            count = import.meta.env.VITE_MAX_DISCUSSIONS_PER_LOAD;
+        }
         let fetchURL = `${import.meta.env.VITE_BACKEND_URL}/discussions`
                 + `?sort-by=${sortMethod}`
                 + `&after-index=${discussionIndex.current}`
-                + (topicId ? `&topic-id=${topicId}` : '')
                 + (searchTerm.current.length !== 0 ? `&search=${searchTerm.current}` : '')
-                + `&count=${import.meta.env.VITE_MAX_DISCUSSIONS_PER_LOAD}`; // TEMP
-        console.log(fetchURL);
+                + (topicId ? `&topic-id=${topicId}` : '')
+                + (count ? `&count=${count}` : '');
         
         fetch(fetchURL, {
             method: 'GET',

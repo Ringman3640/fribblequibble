@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styled, CSSProp } from "styled-components";
 import { SearchIcon } from "./SearchIcon";
 
@@ -55,13 +55,18 @@ const IconContainer = styled.div`
 
 interface SearchBarProps {
     onSearch: (searchPhrase: string, clearSearch: () => void) => void
+    defaultValue?: string,
     disabled?: boolean,
     clearOnSearch?: boolean,
     formCss?: CSSProp
 }
 
-export function SearchBar({onSearch, disabled, clearOnSearch, formCss}: SearchBarProps) {
-    const [searchText, setSearchText] = useState<string>('');
+export function SearchBar({onSearch, defaultValue, disabled, clearOnSearch, formCss}: SearchBarProps) {
+    const [searchText, setSearchText] = useState<string>(defaultValue || '');
+
+    useEffect(() => {
+        setSearchText(defaultValue || '');
+    }, [defaultValue]);
 
     function handleSubmit(event: React.FormEvent): void {
         event.preventDefault();

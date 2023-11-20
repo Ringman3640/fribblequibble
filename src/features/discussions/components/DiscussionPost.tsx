@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { DiscussionPostInfo } from "..";
 import { formatTimestamp } from "../../../scripts/formatTimestamp";
 import { QuibblesIcon, VotesIcon } from "../../icons";
@@ -83,6 +83,7 @@ const TopicText = styled.h3`
         color: ${props => props.theme.secondaryColor};
     }
     a:hover {
+        cursor: pointer;
         text-decoration: underline;
     }
 `;
@@ -102,6 +103,18 @@ interface DiscussionPostProps {
 }
 
 export function DiscussionPost({discussionPost}: DiscussionPostProps) {
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    function setTopicIdQuery() {
+        if (discussionPost.topicId === +(searchParams.get('topic-id') || '')) {
+            return;
+        }
+
+        let updatedQueryParams = new URLSearchParams(searchParams.toString());
+        updatedQueryParams.set('topic-id', discussionPost.topicId.toString());
+        setSearchParams(updatedQueryParams.toString());
+    }
+
     return (
         <PostConatiner>
             <PostLink to={`/discussion/${discussionPost.id}`}/>
@@ -109,7 +122,9 @@ export function DiscussionPost({discussionPost}: DiscussionPostProps) {
                 <h3>{discussionPost.title}</h3>
                 <TopicDateRow>
                     <TopicText>
-                        <Link to='google.com'>{discussionPost.topic}</Link>
+                        <a onClick={setTopicIdQuery}>
+                            {discussionPost.topic}
+                        </a>
                     </TopicText>
                     <DateText>
                         Posted {formatTimestamp(discussionPost.timestamp)}
