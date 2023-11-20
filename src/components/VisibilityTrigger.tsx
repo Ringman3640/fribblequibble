@@ -12,8 +12,8 @@ const Trigger = styled.div<{$customStyle?: CSSProp}>`
 `;
 
 interface VisibilityTriggerProps {
-    children: React.ReactNode,
     callback: (isVisible: boolean) => void,
+    children?: React.ReactNode,
     triggerCss?: CSSProp
 }
 
