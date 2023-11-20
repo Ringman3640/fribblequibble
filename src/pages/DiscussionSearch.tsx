@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { SearchBar } from "../components/SearchBar";
 import { DiscussionPostLoader, DiscussionSortMethod, SortMethodSelector } from "../features/discussions";
-import { styled, css } from "styled-components";
 import { FetchMethod } from "../types/BackendFetchInfo";
+import { NavBar } from "../components/NavBar";
+import { styled, css } from "styled-components";
 
 const ErrorScreen = styled.h1`
     position: fixed;
@@ -121,13 +122,14 @@ export default function DiscussionSearch() {
 
     return (
         <>
+        <NavBar hideSearchBar={true}/>
         {!topicName && <h1>Discussions</h1>}
         {topicName && <TopicTitle>Discussions - <em>{topicName}</em></TopicTitle>}
         <SearchSortBar>
             <SearchBar
                 onSearch={handleSearch}
                 defaultValue={searchTerm}
-                formCss={SearchBarStyle}
+                customCss={SearchBarStyle}
             />
             <SortMethodSelector
                 currentMethod={sortMethod}

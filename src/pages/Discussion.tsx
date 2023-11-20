@@ -7,11 +7,12 @@ import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles'
 import { SectionHeader } from '../features/styles';
 import { DiscussionBlobsIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
+import { NavBar } from '../components/NavBar';
 import styled from 'styled-components';
 
 const ContentContainer = styled.div`
     position: relative;
-    margin-top: 200px;
+    margin-top: 60px;
 `;
 
 const BlobIconContainer = styled.div`
@@ -129,6 +130,8 @@ export default function Discussion() {
     }
 
     return (
+        <>
+        <NavBar/>
         <ContentContainer>
             <BlobIconContainer>
                 <DiscussionBlobsIcon/>
@@ -144,5 +147,6 @@ export default function Discussion() {
             />}
             {quibblesLoadable && <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
         </ContentContainer>
+        </>
     );
 }

@@ -149,6 +149,9 @@ html {
 
 	--large-text-padding: 20px;
 	--medium-text-padding: 12px;
+
+	--nav-bar-padding: 20px;
+	--nav-bar-height: calc(var(--h1-font-size) + calc(var(--nav-bar-padding) * 2));
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Kreon';

@@ -58,10 +58,10 @@ interface SearchBarProps {
     defaultValue?: string,
     disabled?: boolean,
     clearOnSearch?: boolean,
-    formCss?: CSSProp
+    customCss?: CSSProp
 }
 
-export function SearchBar({onSearch, defaultValue, disabled, clearOnSearch, formCss}: SearchBarProps) {
+export function SearchBar({onSearch, defaultValue, disabled, clearOnSearch, customCss}: SearchBarProps) {
     const [searchText, setSearchText] = useState<string>(defaultValue || '');
 
     useEffect(() => {
@@ -77,7 +77,7 @@ export function SearchBar({onSearch, defaultValue, disabled, clearOnSearch, form
     }
 
     return (
-        <SearchBarForm onSubmit={handleSubmit} $customStyle={formCss}>
+        <SearchBarForm onSubmit={handleSubmit} $customStyle={customCss}>
             <SearchBarEntryBox
                 placeholder='Search...'
                 value={searchText}
