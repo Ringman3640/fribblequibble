@@ -4,6 +4,7 @@ import { SearchBar } from "../components/SearchBar";
 import { DiscussionPostLoader, DiscussionSortMethod, SortMethodSelector } from "../features/discussions";
 import { FetchMethod } from "../types/BackendFetchInfo";
 import { NavBar } from "../components/NavBar";
+import { DiscussionSearchBlobsIcon } from "../features/icons/components/DiscussionSearchBlobsIcon";
 import { styled, css } from "styled-components";
 
 const ErrorScreen = styled.h1`
@@ -13,6 +14,20 @@ const ErrorScreen = styled.h1`
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
+`;
+
+const ContentContainer = styled.div`
+    position: relative;
+    margin-top: 60px;
+`;
+
+const BlobIconContainer = styled.div`
+    position: absolute;
+    top: -190px;
+    left: -200px;
+    width: 350px;
+    height: 350px;
+    z-index: -8;
 `;
 
 const TopicTitle = styled.h1`
@@ -123,25 +138,30 @@ export default function DiscussionSearch() {
     return (
         <>
         <NavBar hideSearchBar={true}/>
-        {!topicName && <h1>Discussions</h1>}
-        {topicName && <TopicTitle>Discussions - <em>{topicName}</em></TopicTitle>}
-        <SearchSortBar>
-            <SearchBar
-                onSearch={handleSearch}
-                defaultValue={searchTerm}
-                customCss={SearchBarStyle}
+        <ContentContainer>
+            <BlobIconContainer>
+                <DiscussionSearchBlobsIcon/>
+            </BlobIconContainer>
+            {!topicName && <h1>Discussions</h1>}
+            {topicName && <TopicTitle>Discussions - <em>{topicName}</em></TopicTitle>}
+            <SearchSortBar>
+                <SearchBar
+                    onSearch={handleSearch}
+                    defaultValue={searchTerm}
+                    customCss={SearchBarStyle}
+                />
+                <SortMethodSelector
+                    currentMethod={sortMethod}
+                    handleSortChange={newSort => setSortMethod(newSort)}
+                    customStyle={SortBarStyle}
+                />
+            </SearchSortBar>
+            <DiscussionPostLoader
+                sortMethod={sortMethod}
+                search={searchTerm}
+                topicId={topicId ? +topicId : undefined}
             />
-            <SortMethodSelector
-                currentMethod={sortMethod}
-                handleSortChange={newSort => setSortMethod(newSort)}
-                customStyle={SortBarStyle}
-            />
-        </SearchSortBar>
-        <DiscussionPostLoader
-            sortMethod={sortMethod}
-            search={searchTerm}
-            topicId={topicId ? +topicId : undefined}
-        />
+        </ContentContainer>
         </>
     );
 }
