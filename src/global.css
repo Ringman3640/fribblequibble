@@ -126,6 +126,11 @@ table {
 }
 
 /* Custom global styling */
+html {
+	/* This prevents elements from shifting when the scroll bar appears */
+	overflow-x: hidden;
+	margin-right: calc(-1 * (100vw - 100%));
+  }
 :root {
 	font-size: 16px;
 	font-family: 'Roboto';
