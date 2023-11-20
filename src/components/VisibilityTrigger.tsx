@@ -12,11 +12,12 @@ const Trigger = styled.div<{$customStyle?: CSSProp}>`
 `;
 
 interface VisibilityTriggerProps {
-    callback: (isVisible: boolean) => void
+    children: React.ReactNode,
+    callback: (isVisible: boolean) => void,
     triggerCss?: CSSProp
 }
 
-export function VisibilityTrigger({callback, triggerCss}: VisibilityTriggerProps) {
+export function VisibilityTrigger({children, callback, triggerCss}: VisibilityTriggerProps) {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const triggerRef = useRef<HTMLDivElement>(null);
 
@@ -41,6 +42,8 @@ export function VisibilityTrigger({callback, triggerCss}: VisibilityTriggerProps
     }, [isVisible]);
 
     return (
-        <Trigger ref={triggerRef} $customStyle={triggerCss}></Trigger>
+        <Trigger ref={triggerRef} $customStyle={triggerCss}>
+            {children}
+        </Trigger>
     );
 }
