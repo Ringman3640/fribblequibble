@@ -15,6 +15,7 @@ export const baseLargeButton = css`
 
     &:enabled:hover {
         filter: brightness(90%);
+        cursor: pointer;
     }
 
     &:disabled {
