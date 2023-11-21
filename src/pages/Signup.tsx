@@ -1,8 +1,9 @@
+import { NavBar } from "../components/NavBar";
 import { SignUpForm } from "../features/auth";
-import { SectionHeader } from "../features/styles";
-import styled from "styled-components";
+import { MainContentRegion, SectionHeader } from "../features/styles";
+import { styled, css } from "styled-components";
 
-const ContentContainer = styled.div`
+const RegionStyle = css`
     h1 {
         margin-bottom: 30px;
     }
@@ -17,7 +18,9 @@ const RequirementHeader = styled(SectionHeader)`
 
 export default function SignUp() {
     return (
-        <ContentContainer>
+        <>
+        <NavBar/>
+        <MainContentRegion customCss={RegionStyle}>
             <h1>Sign Up</h1>
             <SignUpForm />
             <RequirementHeader>Username Requirements</RequirementHeader>
@@ -30,6 +33,7 @@ export default function SignUp() {
                 <li>Maximum {import.meta.env.VITE_PASSWORD_MAX_LENGTH} characters</li>
                 <li>May only contain ASCII characters</li>
             </ul>
-        </ContentContainer>
+        </MainContentRegion>
+        </>
     );
 }

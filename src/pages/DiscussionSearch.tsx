@@ -5,6 +5,7 @@ import { DiscussionPostLoader, DiscussionSortMethod, SortMethodSelector } from "
 import { FetchMethod } from "../types/BackendFetchInfo";
 import { NavBar } from "../components/NavBar";
 import { DiscussionSearchBlobsIcon } from "../features/icons/components/DiscussionSearchBlobsIcon";
+import { MainContentRegion } from "../features/styles";
 import { styled, css } from "styled-components";
 
 const ErrorScreen = styled.h1`
@@ -14,11 +15,6 @@ const ErrorScreen = styled.h1`
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
-`;
-
-const ContentContainer = styled.div`
-    position: relative;
-    margin-top: 60px;
 `;
 
 const BlobIconContainer = styled.div`
@@ -129,16 +125,19 @@ export default function DiscussionSearch() {
 
     if (topicId && topicName === null) {
         return (
+            <>
+            <NavBar/>
             <ErrorScreen>
                 Topic ID {topicId} does not exist
             </ErrorScreen>
+            </>
         );
     }
 
     return (
         <>
         <NavBar hideSearchBar={true}/>
-        <ContentContainer>
+        <MainContentRegion>
             <BlobIconContainer>
                 <DiscussionSearchBlobsIcon/>
             </BlobIconContainer>
@@ -161,7 +160,7 @@ export default function DiscussionSearch() {
                 search={searchTerm}
                 topicId={topicId ? +topicId : undefined}
             />
-        </ContentContainer>
+        </MainContentRegion>
         </>
     );
 }

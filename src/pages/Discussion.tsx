@@ -4,23 +4,18 @@ import { useFetchBackend } from '../hooks/useFetchBackend';
 import { FetchMethod } from '../types/BackendFetchInfo';
 import { DiscussionHead, DiscussionVote } from '../features/discussions';
 import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
-import { SectionHeader } from '../features/styles';
+import { MainContentRegion, SectionHeader } from '../features/styles';
 import { DiscussionBlobsIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
 import { NavBar } from '../components/NavBar';
 import styled from 'styled-components';
 
-const ContentContainer = styled.div`
-    position: relative;
-    margin-top: 60px;
-`;
-
 const BlobIconContainer = styled.div`
     position: absolute;
-    top: -160px;
-    left: -300px;
-    width: 350px;
-    height: 350px;
+    top: -150px;
+    left: -260px;
+    width: 300px;
+    height: 300px;
     z-index: -8;
 `;
 
@@ -132,9 +127,9 @@ export default function Discussion() {
     return (
         <>
         <NavBar/>
-        <ContentContainer>
+        <MainContentRegion>
             <BlobIconContainer>
-                <DiscussionBlobsIcon/>
+                    <DiscussionBlobsIcon/>
             </BlobIconContainer>
             <DiscussionHead discussionInfo={discussionInfo} discussionId={+id}/>
             <DiscussionVote choices={discussionInfo.choices} discussionId={+id}/>
@@ -146,7 +141,7 @@ export default function Discussion() {
                 discussionChoices={discussionInfo.choices}
             />}
             {quibblesLoadable && <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
-        </ContentContainer>
+        </MainContentRegion>
         </>
     );
 }

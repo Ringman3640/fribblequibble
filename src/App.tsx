@@ -9,12 +9,6 @@ import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
 import './global.css';
 
-const MainContentRegion = styled.div`
-    margin: auto;
-    margin-top: 100px;
-    width: var(--main-content-width);
-`;
-
 const BackgroundColor = styled.div`
     position: fixed;
     width: 100vw;
@@ -49,9 +43,7 @@ function AppWrapperGrouping({children}: React.PropsWithChildren) {
     return (
         <LoginInfoWrapper>
             <ThemeInfoWrapper>
-                <MainContentRegion>
-                    {children}
-                </MainContentRegion>
+                {children}
             </ThemeInfoWrapper>
         </LoginInfoWrapper>
     );

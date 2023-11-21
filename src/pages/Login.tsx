@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { LoginForm } from "../features/auth";
-import styled from "styled-components";
+import { MainContentRegion } from "../features/styles";
+import { NavBar } from "../components/NavBar";
+import { css } from "styled-components";
 
-const ContentContainer = styled.div`
+const RegionStyle = css`
     h1 {
         margin-bottom: 30px;
     }
@@ -13,10 +15,13 @@ const ContentContainer = styled.div`
 
 export default function Login() {
     return (
-        <ContentContainer>
+        <>
+        <NavBar/>
+        <MainContentRegion customCss={RegionStyle}>
             <h1>Login</h1>
             <LoginForm />
             <p>Need an account? <Link to='/signup'>Sign Up</Link></p>
-        </ContentContainer>
+        </MainContentRegion>
+        </>
     );
 }
