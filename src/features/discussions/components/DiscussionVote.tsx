@@ -1,10 +1,11 @@
-import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { DiscussionChoiceInfo } from "..";
 import { ChoiceVoteInfo } from "..";
 import { LoginInfoContext } from "../../auth";
 import { ChoiceResultsDisplay } from "./ChoiceResultsDisplay";
 import { SectionHeader } from "../../styles";
+import { baseLargeButton } from "../../styles";
+import styled from "styled-components";
 
 const ChoicesRegion = styled.div`
     display: flex;
@@ -12,25 +13,7 @@ const ChoicesRegion = styled.div`
 `;
 
 const ChoiceButton = styled.button`
-    height: 50px;
-    min-width: 160px;
-    font-size: var(--p-font-size);
-    border-radius: 100px;
-    border-style: solid;
-    border-width: thin;
-    transition: all 0.1s;
-
-    background-color: ${props => props.theme.backgroundColor};
-    color: ${props => props.theme.primaryColorLight};
-    border-color: ${props => props.theme.primaryColorLight};
-
-    &:enabled:hover {
-        filter: brightness(90%);
-    }
-
-    &:disabled {
-        filter: brightness(90%);
-    }
+    ${baseLargeButton}
     
     &.selected {
         border: none;
