@@ -60,7 +60,12 @@ export function NavBar({hideSearchBar}: NavBarProps) {
     const navigate = useNavigate();
 
     function handleSearch(searchPhrase: string): void {
-        navigate(`/discussion?search=${searchPhrase}`);
+        if (searchPhrase) {
+            navigate(`/discussion?search=${searchPhrase}`);
+        }
+        else {
+            navigate(`/discussion`);
+        }
     }
 
     return (
