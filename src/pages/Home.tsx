@@ -102,16 +102,19 @@ export default function Home() {
             <SectionHeader>Recent Activity</SectionHeader>
             <DiscussionPostLoader
                 sortMethod={DiscussionSortMethod.Acvitity}
+                retrieveCount={3}
                 maxRetrieves={1}
             />
             <SectionHeader>New</SectionHeader>
             <DiscussionPostLoader
                 sortMethod={DiscussionSortMethod.New}
+                retrieveCount={3}
                 maxRetrieves={1}
             />
             <SectionHeader>Most Discussed</SectionHeader>
             <DiscussionPostLoader
                 sortMethod={DiscussionSortMethod.Quibbles}
+                retrieveCount={3}
                 maxRetrieves={1}
             />
         </MainContentRegion>
