@@ -29,7 +29,12 @@ export function useFetchBackend(fetchInfo: BackendFetchInfo) {
             return res.json();
         })
         .then(json => {
-            setData(json);
+            if ('error' in json) {
+                setError(json);
+            }
+            else {
+                setData(json);
+            }
         })
         .catch(err => {
             setError(err);
