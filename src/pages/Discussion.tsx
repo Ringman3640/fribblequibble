@@ -106,21 +106,25 @@ export default function Discussion() {
         loadNextQuibbles();
     }
 
-    if (!id) {
+    if (!id || discussionError) {
         return (
-            <h1>Discussion ID not provided</h1>
+            <>
+            <NavBar/>
+            <MainContentRegion>
+                <h1>{!id ? 'Discussion ID not provided' : 'Could not access discussion'}</h1>
+            </MainContentRegion>
+            </>
         );
     }
 
     if (discussionLoading) {
         return (
-            <h1>Discussion Loading</h1>
-        );
-    }
-
-    if (discussionError) {
-        return (
-            <h1>Could Not Access Discussion</h1>
+            <>
+            <NavBar/>
+            <MainContentRegion>
+                {/* TODO: add loading icon or something */}
+            </MainContentRegion>
+            </>
         );
     }
 
