@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled, CSSProp } from "styled-components";
 
 const Trigger = styled.div<{$customStyle?: CSSProp}>`
-    height: 10px;
+    min-height: 10px;
     ${props => props.$customStyle}
 `;
 
