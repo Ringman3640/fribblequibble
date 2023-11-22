@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DiscussionPostLoader, DiscussionSortMethod } from "../features/discussions";
 import { HomepageBlobsIcon, HomeArrowIcon } from "../features/icons";
@@ -60,9 +61,13 @@ const ArrowIconContainer = styled.div`
     transform: translateX(-50%);
     width: 90px;
     height: fit-content;
+    transition: color 0.2s ease-in-out;
 
     color: ${props => props.theme.primaryColorLight};
 
+    &.invisible {
+        color: transparent;
+    }
     h3 {
         position: absolute;
         top: -35px;
@@ -78,6 +83,19 @@ const MainRegionStyle = css`
 `;
 
 export default function Home() {
+    const [arrowIconVisible, setArrowIconVisible] = useState<boolean>(true);
+
+    useEffect(() => {
+        function applyArrowIconVisibility() {
+            setArrowIconVisible(window.scrollY === 0);
+        }
+
+        document.addEventListener('scroll', applyArrowIconVisibility);
+
+        return () => {
+            document.removeEventListener('scroll', applyArrowIconVisibility);
+        };
+    }, []);
 
     return (
         <>
@@ -96,7 +114,7 @@ export default function Home() {
                     Discussions
                 </DiscussionLink>
             </IntroTextContainer>
-            <ArrowIconContainer>
+            <ArrowIconContainer className={!arrowIconVisible ? 'invisible' : undefined}>
                 <HomeArrowIcon/>
                 <h3>
                     Take a peak
