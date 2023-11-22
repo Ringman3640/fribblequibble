@@ -14,10 +14,11 @@ const Trigger = styled.div<{$customStyle?: CSSProp}>`
 interface VisibilityTriggerProps {
     callback: (isVisible: boolean) => void,
     children?: React.ReactNode,
+    disabled?: boolean,
     customCss?: CSSProp
 }
 
-export function VisibilityTrigger({children, callback, customCss}: VisibilityTriggerProps) {
+export function VisibilityTrigger({children, callback, disabled, customCss}: VisibilityTriggerProps) {
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const triggerRef = useRef<HTMLDivElement>(null);
 
@@ -38,7 +39,9 @@ export function VisibilityTrigger({children, callback, customCss}: VisibilityTri
     }, []);
 
     useEffect(() => {
-        callback(isVisible);
+        if (!disabled) {
+            callback(isVisible);
+        }
     }, [isVisible]);
 
     return (

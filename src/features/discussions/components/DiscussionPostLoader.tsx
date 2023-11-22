@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { DiscussionPostInfo, DiscussionPostList, DiscussionSortMethod } from "..";
+import { VisibilityTrigger } from "../../../components/VisibilityTrigger";
+import { css } from "styled-components";
 
 interface DiscussionPostLoaderProps {
     sortMethod: DiscussionSortMethod,
@@ -8,6 +10,11 @@ interface DiscussionPostLoaderProps {
     retrieveCount?: number,
     maxRetrieves?: number
 }
+
+const VisibilityTriggerCss = css`
+    width: 100%;
+    height: 60px;
+`;
 
 export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount, maxRetrieves}: DiscussionPostLoaderProps) {
     const [discussions, setDiscussions] = useState<DiscussionPostInfo[]>([]);
@@ -110,10 +117,11 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
     return (
         <>
         <DiscussionPostList discussionPosts={discussions}/>
-        <button 
-            disabled={discussionsLoading || !discussionsLoadable}
-            onClick={() => loadNextDiscussions()}>
-            Load More Discussions
-        </button></>
+        <VisibilityTrigger
+            callback={() => setGetDiscussions(true)}
+            customCss={VisibilityTriggerCss}
+            disabled={!discussionsLoadable || discussionsLoading}
+        />
+        </>
     );
 }
