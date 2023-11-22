@@ -53,10 +53,13 @@ const Spacer = styled.div`
 `;
 
 interface NavBarProps {
-    hideSearchBar?: boolean
+    hideSearchBar?: boolean,
+    hideLogo?: boolean,
+    hideProfile?: boolean,
+    disablePhysicalHeight?: boolean
 }
 
-export function NavBar({hideSearchBar}: NavBarProps) {
+export function NavBar({hideSearchBar, hideLogo, hideProfile, disablePhysicalHeight}: NavBarProps) {
     const navigate = useNavigate();
 
     function handleSearch(searchPhrase: string): void {
@@ -71,9 +74,10 @@ export function NavBar({hideSearchBar}: NavBarProps) {
     return (
         <>
         <NavBarContainer>
+            {!hideLogo &&
             <LogoText>
                 <Link to='/'>FribbleQuibble</Link>
-            </LogoText>
+            </LogoText>}
             {!hideSearchBar &&
             <SearchBarContainer>
                 <SearchBar
@@ -81,9 +85,10 @@ export function NavBar({hideSearchBar}: NavBarProps) {
                     customCss={SearchBarStyle}
                 />
             </SearchBarContainer>}
-            <ProfileText>GRAAAAA</ProfileText>
+            {!hideProfile &&
+            <ProfileText>GRAAAAA</ProfileText>}
         </NavBarContainer>
-        <Spacer/>
+        {!disablePhysicalHeight && <Spacer/>}
         </>
     );
 }

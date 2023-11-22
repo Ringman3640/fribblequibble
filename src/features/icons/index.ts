@@ -1,4 +1,6 @@
 export * from './components/VotesIcon'
 export * from './components/QuibblesIcon'
 export * from './components/DiscussionBlobsIcon'
+export * from './components/HomeArrowIcon'
+export * from './components/HomepageBlobsIcon'
 export * from './components/CondemnIcon'
