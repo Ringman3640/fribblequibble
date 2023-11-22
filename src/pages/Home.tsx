@@ -1,5 +1,4 @@
-import { NavBar } from "../components/NavBar";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { DiscussionPostLoader, DiscussionSortMethod } from "../features/discussions";
 import { HomepageBlobsIcon, HomeArrowIcon } from "../features/icons";
 import { MainContentRegion, SectionHeader, baseLargeButton } from "../features/styles";
@@ -38,13 +37,20 @@ const WebsiteDescription = styled.p`
     margin-top: 30px;
 `;
 
-const DiscussionButton = styled.button`
+const DiscussionLink = styled(Link)`
     ${baseLargeButton};
+    display: block;
     margin-top: 30px;
     border: 0px;
+    text-decoration: none;
 
     background-color: ${props => props.theme.secondaryColor};
     color: ${props => props.theme.backgroundColor};
+
+    &:visited {
+        color: ${props => props.theme.backgroundColor};
+        text-decoration: none;
+    }
 `;
 
 const ArrowIconContainer = styled.div`
@@ -72,7 +78,6 @@ const MainRegionStyle = css`
 `;
 
 export default function Home() {
-    const navigate = useNavigate();
 
     return (
         <>
@@ -87,9 +92,9 @@ export default function Home() {
                 <WebsiteDescription>
                     A place where foolish people discuss foolish things
                 </WebsiteDescription>
-                <DiscussionButton onClick={() => navigate('/discussion')}>
+                <DiscussionLink to='/discussion'>
                     Discussions
-                </DiscussionButton>
+                </DiscussionLink>
             </IntroTextContainer>
             <ArrowIconContainer>
                 <HomeArrowIcon/>
