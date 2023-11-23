@@ -76,7 +76,7 @@ export function NavBar({hideSearchBar, hideLogo, hideProfile, disablePhysicalHei
         <NavBarContainer>
             {!hideLogo &&
             <LogoText>
-                <Link to='/'>FribbleQuibble</Link>
+                <Link to='/discussion'>FribbleQuibble</Link>
             </LogoText>}
             {!hideSearchBar &&
             <SearchBarContainer>
