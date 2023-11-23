@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { DiscussionInfo, DiscussionInfoError } from "../types/DiscussionInfo";
-import { DiscussionTags } from "./DiscussionTags";
 import { SectionHeader } from "../../styles";
 import styled from "styled-components";
 
