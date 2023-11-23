@@ -66,7 +66,7 @@ const ArrowIconContainer = styled.div`
     color: ${props => props.theme.primaryColorLight};
 
     &.invisible {
-        color: transparent;
+        color: ${props => props.theme.backgroundColor};;
     }
     h3 {
         position: absolute;
