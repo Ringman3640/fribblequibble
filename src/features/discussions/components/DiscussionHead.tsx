@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { DiscussionInfo, DiscussionInfoError } from "../types/DiscussionInfo";
 import { DiscussionTags } from "./DiscussionTags";
 import { SectionHeader } from "../../styles";
@@ -16,6 +17,18 @@ const TopicText = styled.h3`
     display: inline-block;
 
     color: ${props => props.theme.secondaryColor};
+
+    & > a {
+        color: inherit;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+        &:visited {
+            color: inherit;
+        }
+    }
 `;
 
 const DateText = styled.div`
@@ -59,7 +72,10 @@ export function DiscussionHead({ discussionInfo, discussionId }: DiscussionHeadP
             <h1>{discussionInfo.title}</h1>
             <TopicDateContainer>
                 <TopicText>
-                    <a>{discussionInfo.topic}</a>
+                    <Link
+                        to={`/discussion?topic-id=${discussionInfo.topicId}`}>
+                        {discussionInfo.topic}
+                    </Link>
                 </TopicText>
                 <DateText>
                     <small>October 22, 2023</small>
