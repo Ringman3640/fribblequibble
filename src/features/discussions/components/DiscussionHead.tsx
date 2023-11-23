@@ -81,7 +81,6 @@ export function DiscussionHead({ discussionInfo, discussionId }: DiscussionHeadP
                     <small>October 22, 2023</small>
                 </DateText>
             </TopicDateContainer>
-            <DiscussionTags discussionId={discussionId}/>
             <DescrpitionText>{discussionInfo.description}</DescrpitionText>
             {discussionInfo.conditions ? (
                 <ConditionsContainer>
