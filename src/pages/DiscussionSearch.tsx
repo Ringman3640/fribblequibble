@@ -69,6 +69,7 @@ export default function DiscussionSearch() {
     }, [searchParams]);
 
     useEffect(() => {
+        setTopicName(undefined);
         if (topicId) {
             getTopicName();
         }
