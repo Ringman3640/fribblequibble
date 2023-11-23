@@ -9,7 +9,6 @@ const ContentContainer = styled.div`
 
 const TopicDateContainer = styled.span`
     display: inline-block;
-    margin-top: 20px;
 `;
 
 const TopicText = styled.h3`
