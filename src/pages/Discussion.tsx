@@ -135,16 +135,23 @@ export default function Discussion() {
             <BlobIconContainer>
                     <DiscussionBlobsIcon/>
             </BlobIconContainer>
-            <DiscussionHead discussionInfo={discussionInfo} discussionId={+id}/>
-            <DiscussionVote choices={discussionInfo.choices} discussionId={+id}/>
+            <DiscussionHead discussionInfo={discussionInfo}/>
+            <DiscussionVote
+                choices={discussionInfo.choices}
+                discussionId={+id}
+            />
             <SectionHeader>Discussion</SectionHeader>
-            <QuibbleEntryBox discussionId={id} handleAddQuibble={insertQuibble}/>
+            <QuibbleEntryBox
+                discussionId={id}
+                handleAddQuibble={insertQuibble}
+            />
             {quibbles &&
             <QuibbleList
                 quibbles={quibbles}
                 discussionChoices={discussionInfo.choices}
             />}
-            {quibblesLoadable && <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
+            {quibblesLoadable && 
+            <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
         </MainContentRegion>
         </>
     );

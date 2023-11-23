@@ -45,11 +45,10 @@ const ConditionsContainer = styled.div`
 `;
 
 interface DiscussionHeadProps {
-    discussionInfo: DiscussionInfo | DiscussionInfoError | undefined,
-    discussionId: number
+    discussionInfo: DiscussionInfo | DiscussionInfoError | undefined
 }
 
-export function DiscussionHead({ discussionInfo, discussionId }: DiscussionHeadProps) {
+export function DiscussionHead({ discussionInfo }: DiscussionHeadProps) {
     if (discussionInfo === undefined) {
         return (
             <h1>Discussion not loaded</h1>
