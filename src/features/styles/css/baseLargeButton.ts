@@ -16,6 +16,7 @@ export const baseLargeButton = css`
     border-color: ${props => props.theme.primaryColorLight};
 
     &:hover {
+        text-decoration: none;
         filter: brightness(90%);
         cursor: pointer;
     }
