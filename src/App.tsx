@@ -7,6 +7,7 @@ import DiscussionSearch from './pages/DiscussionSearch.tsx';
 import Discussion from './pages/Discussion.tsx'
 import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
+import UserProfile from './pages/UserProfile.tsx';
 import './global.css';
 
 const BackgroundColor = styled.div`
@@ -29,9 +30,13 @@ const DefaultFontThemes = createGlobalStyle`
     }
     a {
         color: ${props => props.theme.secondaryColor};
+        text-decoration: inherit;
 
         &:visited {
-            color: ${props => props.theme.tertiaryColor};
+            color: ${props => props.theme.secondaryColor};
+        }
+        &:hover {
+            text-decoration: underline;
         }
     }
     input:focus {
@@ -60,6 +65,7 @@ export default function App() {
                 <Route path='/discussion/:id' element={<Discussion />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignUp />} />
+                <Route path='/user/:id' element={<UserProfile />} />
             </Routes>
         </AppWrapperGrouping>
     );
