@@ -79,5 +79,11 @@ export function useLoadQuibbles({type, identifier}: useLoadQuibblesProps) {
         });
     }
 
-    return {quibbles, quibblesLoading, quibblesLoadable, loadNextQuibbles};
+    return {
+        quibbles,
+        quibblesLoading,
+        quibblesLoadable,
+        loadNextQuibbles,
+        insertQuibble
+    };
 }
