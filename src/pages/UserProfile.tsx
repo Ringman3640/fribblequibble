@@ -1,9 +1,12 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
-import { MainContentRegion } from "../features/styles";
+import { MainContentRegion, SectionHeader } from "../features/styles";
 import { ProfileInfoBar, UserStatistics, UserTopDiscussion } from "../features/users";
+import { useLoadQuibbles } from "../hooks/useLoadQuibbles";
+import { QuibbleList } from "../features/quibbles";
 import { css } from "styled-components";
+import { VisibilityTrigger } from "../components/VisibilityTrigger";
 
 const MainContentRegionStyle = css`
     h1 {
@@ -15,6 +18,10 @@ export default function UserProfile() {
     const {id} = useParams();
     const [userStats, setUserStats] = useState<UserStatistics | null | undefined>(undefined);
     const [topDiscussions, setTopDiscussions] = useState<UserTopDiscussion[] | null | undefined>(undefined);
+    const {quibbles, quibblesLoading, quibblesLoadable, loadNextQuibbles} = useLoadQuibbles({
+        type: 'Profile',
+        identifier: id || '-1'
+    });
 
     useEffect(() => {
         if (id === undefined) {
@@ -23,6 +30,7 @@ export default function UserProfile() {
         }
         loadStatistics();
         loadTopDiscussions();
+        loadNextQuibbles(true);
     }, []);
 
     function loadStatistics(): void {
@@ -67,6 +75,12 @@ export default function UserProfile() {
         })
     }
 
+    function onLoadVisibilityTrigger(isVisible: boolean) {
+        if (isVisible) {
+            loadNextQuibbles();
+        }
+    }
+
     if (userStats === null || topDiscussions === null) {
         return (
             <>
@@ -98,6 +112,13 @@ export default function UserProfile() {
                 statistics={userStats}
                 topDiscussions={topDiscussions}
             />
+            <SectionHeader>Quibbles</SectionHeader>
+            <QuibbleList quibbles={quibbles}/>
+            <VisibilityTrigger
+                callback={onLoadVisibilityTrigger}
+                disabled={!quibblesLoadable}>
+                {/* TODO: Add loading symbol */}
+            </VisibilityTrigger>
         </MainContentRegion>
         </>
     );

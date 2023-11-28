@@ -22,10 +22,11 @@ const CondemnButton = styled.button`
 
 interface QuibbleCondemnerProps {
     quibbleInfo: QuibbleInfo,
-    handleCondemn: () => void
+    handleCondemn: () => void,
+    visualOnly?: boolean
 }
 
-export function QuibbleCondemner({ quibbleInfo, handleCondemn }: QuibbleCondemnerProps) {
+export function QuibbleCondemner({quibbleInfo, handleCondemn, visualOnly}: QuibbleCondemnerProps) {
     const {loginInfo} = useContext(LoginInfoContext);
     const [isCondemned, setIsCondemned] = useState<boolean | undefined>(quibbleInfo.condemned);
     const [waitingForApi, setWaitingForAPI] = useState<boolean>(false);
@@ -57,9 +58,12 @@ export function QuibbleCondemner({ quibbleInfo, handleCondemn }: QuibbleCondemne
 
     return (
         <CondemnButton 
-            disabled={isCondemned || !loginInfo || waitingForApi} 
+            disabled={isCondemned || !loginInfo || waitingForApi || visualOnly} 
             onClick={clickHandler}>
-            <CondemnIcon active={isCondemned || false}/>
+            <CondemnIcon 
+                active={isCondemned || false}
+                loading={visualOnly}
+            />
         </CondemnButton>
     );
 }

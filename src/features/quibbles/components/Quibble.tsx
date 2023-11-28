@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { QuibbleInfo } from "../types/QuibbleInfo";
 import { QuibbleCondemner } from "./QuibbleCondemner";
 import { formatTimestamp } from "../../../scripts/formatTimestamp";
@@ -6,12 +7,18 @@ import styled from "styled-components";
 
 const QuibbleContainer = styled.div`
     margin-bottom: 40px;
+
+    & > * {
+        margin-top: 10px;
+    }
+    & > *:nth-child(1) {
+        margin-top: 0px;
+    }
 `;
 
 const AuthorName = styled.a`
-display: inline-block;
+    display: inline-block;
     font-size: var(--h3-font-size);
-    margin-bottom: 10px;
 
     color: ${props => props.theme.secondaryColor};
 `;
@@ -19,10 +26,11 @@ display: inline-block;
 const ChoiceText = styled.p`
     display: inline-block;
     margin-left: 1rem;
+    font-size: var(--small-font-size);
 `;
 
-const ContentText = styled.p`
-    margin-bottom: 10px;
+const FromDiscussionText = styled.p`
+    font-size: var(--small-font-size);
 `;
 
 const DateCondemnRow = styled.span`
@@ -55,20 +63,37 @@ export function Quibble({ quibbleInfo, userChoice }: QuibbleProps) {
         setCondemnCount(condemnCount + 1);
     }
 
+    const isDiscussionQuibble = 'authorName' in quibbleInfo;
     return (
         <QuibbleContainer>
-            <span>
-                <AuthorName>{quibbleInfo.authorName}</AuthorName>
-                <ChoiceText><small>{userChoice}</small></ChoiceText>
-            </span>
-            <ContentText>{quibbleInfo.content}</ContentText>
+            {isDiscussionQuibble ? 
+                <span>
+                    <AuthorName>
+                        <Link to={`/user/${quibbleInfo.authorId}`}>
+                            {quibbleInfo.authorName}
+                        </Link>
+                    </AuthorName>
+                    <ChoiceText>{userChoice}</ChoiceText>
+                </span>
+                :
+                <FromDiscussionText>
+                    From &nbsp;
+                    <Link to={`/discussion/${quibbleInfo.discussionId}`}>
+                        {quibbleInfo.discussion}
+                    </Link>
+                </FromDiscussionText>
+            }
+            <p>{quibbleInfo.content}</p>
             <DateCondemnRow>
                 <DateDisplay><small>{formatTimestamp(quibbleInfo.timestamp)}</small></DateDisplay>
                 <QuibbleCondemner
                     quibbleInfo={quibbleInfo}
                     handleCondemn={increaseCondemnCount}
+                    visualOnly={!isDiscussionQuibble}
                 />
-                <CondemnCountDisplay>{condemnCount || ''}</CondemnCountDisplay>
+                <CondemnCountDisplay>
+                    {condemnCount || ''}
+                </CondemnCountDisplay>
             </DateCondemnRow>
         </QuibbleContainer>
     );

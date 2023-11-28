@@ -13,13 +13,13 @@ interface QuibbleListProps {
 }
 
 export function QuibbleList({ quibbles, discussionChoices }: QuibbleListProps) {
-    function getUserChoice(choiceId: number | undefined): string {
-        if (!choiceId || !discussionChoices) {
+    function getUserChoice(quibble: QuibbleInfo): string {
+        if (!('choiceId' in quibble) || !discussionChoices) {
             return '';
         }
 
         for (const discussionChoice of discussionChoices) {
-            if (choiceId === discussionChoice.id) {
+            if (quibble.choiceId === discussionChoice.id) {
                 return discussionChoice.name;
             }
         }
@@ -32,7 +32,7 @@ export function QuibbleList({ quibbles, discussionChoices }: QuibbleListProps) {
             {quibbles && quibbles.map((quibble) =>
                 <Quibble
                     quibbleInfo={quibble}
-                    userChoice={getUserChoice(quibble.choiceId)}
+                    userChoice={getUserChoice(quibble)}
                     key={quibble.id}
                 />
             )}
