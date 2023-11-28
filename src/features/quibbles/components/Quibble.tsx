@@ -16,7 +16,7 @@ const QuibbleContainer = styled.div`
     }
 `;
 
-const AuthorName = styled.a`
+const AuthorName = styled.h3`
     display: inline-block;
     font-size: var(--h3-font-size);
 
