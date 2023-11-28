@@ -1,18 +1,19 @@
 import { QuibbleInfo } from "../types/QuibbleInfo";
 import { Quibble } from "./Quibble";
 import { DiscussionChoiceInfo } from "../../discussions";
-import styled from "styled-components";
+import { styled, CSSProp } from "styled-components";
 
-const ContentContainer = styled.div`
-    margin-top: 30px;
+const ContentContainer = styled.div<{$customCss: CSSProp}>`
+    ${props => props.$customCss};
 `;
 
 interface QuibbleListProps {
     quibbles: QuibbleInfo[],
-    discussionChoices?: DiscussionChoiceInfo[]
+    discussionChoices?: DiscussionChoiceInfo[],
+    customCss?: CSSProp;
 }
 
-export function QuibbleList({ quibbles, discussionChoices }: QuibbleListProps) {
+export function QuibbleList({quibbles, discussionChoices, customCss}: QuibbleListProps) {
     function getUserChoice(quibble: QuibbleInfo): string {
         if (!('choiceId' in quibble) || !discussionChoices) {
             return '';
@@ -28,7 +29,7 @@ export function QuibbleList({ quibbles, discussionChoices }: QuibbleListProps) {
     }
 
     return (
-        <ContentContainer>
+        <ContentContainer $customCss={customCss}>
             {quibbles && quibbles.map((quibble) =>
                 <Quibble
                     quibbleInfo={quibble}
