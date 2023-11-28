@@ -146,9 +146,11 @@ html {
 
 	--large-border-radius: 26px;
 	--medium-border-radius: 16px;
+	--small-border-radius: 8px;
 
 	--large-text-padding: 20px;
 	--medium-text-padding: 12px;
+	--small-text-padding: 6px;
 
 	--nav-bar-padding: 20px;
 	--nav-bar-height: calc(var(--h2-font-size) + calc(var(--nav-bar-padding) * 2));

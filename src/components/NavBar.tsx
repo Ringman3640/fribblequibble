@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { SearchBar } from "./SearchBar";
+import { UtilityMenuButton } from "./UtilityMenuButton";
 import { styled, css } from "styled-components";
 
 const NavBarContainer = styled.div`
@@ -11,7 +12,6 @@ const NavBarContainer = styled.div`
     right: 0px;
     height: var(--nav-bar-height);
     padding: var(--nav-bar-padding);
-    overflow: hidden;
 
     & > * {
         margin-top: auto;
@@ -44,8 +44,9 @@ const SearchBarStyle = css`
     width: 500px;
 `;
 
-const ProfileText = styled.h2`
+const UtilityMenuContainer = styled.div`
     margin-left: auto;
+    height: 100%;
 `;
 
 const Spacer = styled.div`
@@ -86,7 +87,9 @@ export function NavBar({hideSearchBar, hideLogo, hideProfile, disablePhysicalHei
                 />
             </SearchBarContainer>}
             {!hideProfile &&
-            <ProfileText>GRAAAAA</ProfileText>}
+            <UtilityMenuContainer>
+                <UtilityMenuButton/>
+            </UtilityMenuContainer>}
         </NavBarContainer>
         {!disablePhysicalHeight && <Spacer/>}
         </>

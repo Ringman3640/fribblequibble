@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 64 64">
+  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="6" d="M-3 0h56" transform="translate(7 12)"/>
+  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="6" d="M-3 0h56" transform="translate(7 32)"/>
+  <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="bevel" stroke-width="6" d="M-3 0h56" transform="translate(7 52)"/>
+</svg>
