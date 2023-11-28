@@ -40,9 +40,7 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
 
     // Use effect to check if the user has already voted
     useEffect(() => {
-        console.log('entered useEffect');
         if (!loginInfo) {
-            console.log('loginInfo was null');
             return;
         }
         setWaitingAPI(true);
@@ -55,7 +53,6 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             }
         })
         .then(res => {
-            console.log('Fetch recieved');
             // API returns an error response if the user has not voted yet
             if (res.status === 400) {
                 return Promise.reject();
@@ -64,17 +61,14 @@ export function DiscussionVote({ choices, discussionId }: DiscussionVoteProps) {
             return res.json();
         })
         .then(json => {
-            console.log('Res JSON processed', json);
             setUserChoiceId(json.choiceId);
             getChoiceVotes();
         })
         .catch(() => {
-            console.log('error');
             // This catch only exists to silence an error if the first promise
             // handler returns Promise.reject(). It servers no other purpose.
         })
         .finally(() => {
-            console.log('finally');
             setWaitingAPI(false);
         });
     }, [loginInfo]);
