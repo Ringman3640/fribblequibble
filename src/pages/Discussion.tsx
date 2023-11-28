@@ -8,7 +8,7 @@ import { MainContentRegion, SectionHeader } from '../features/styles';
 import { DiscussionBlobsIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
 import { NavBar } from '../components/NavBar';
-import styled from 'styled-components';
+import { styled, css } from 'styled-components';
 
 const BlobIconContainer = styled.div`
     position: absolute;
@@ -17,6 +17,10 @@ const BlobIconContainer = styled.div`
     width: 300px;
     height: 300px;
     z-index: -8;
+`;
+
+const QuibbleListStyle = css`
+    margin-top: 30px;  
 `;
 
 export default function Discussion() {
@@ -149,6 +153,7 @@ export default function Discussion() {
             <QuibbleList
                 quibbles={quibbles}
                 discussionChoices={discussionInfo.choices}
+                customCss={QuibbleListStyle}
             />}
             {quibblesLoadable && 
             <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
