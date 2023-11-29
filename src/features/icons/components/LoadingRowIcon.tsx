@@ -34,7 +34,7 @@ interface LoadingRowIconProps {
 export function LoadingRowIcon({visibilityDelay}: LoadingRowIconProps) {
     return (
         <IconContainer
-            className={visibilityDelay ? 'delay' : undefined}
+            className={visibilityDelay !== undefined ? 'delay' : undefined}
             $animDelay={visibilityDelay || 0}>
             <SingleBlobContainer>
                 <LoadingBlobIcon delaySeconds={0}/>
