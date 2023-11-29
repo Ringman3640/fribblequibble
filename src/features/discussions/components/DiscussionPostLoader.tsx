@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { DiscussionPostInfo, DiscussionPostList, DiscussionSortMethod } from "..";
 import { VisibilityTrigger } from "../../../components/VisibilityTrigger";
+import { LoadingRowIcon } from "../../icons";
 import { css } from "styled-components";
 
 interface DiscussionPostLoaderProps {
@@ -120,8 +121,9 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
         <VisibilityTrigger
             callback={() => setGetDiscussions(true)}
             customCss={VisibilityTriggerCss}
-            disabled={!discussionsLoadable || discussionsLoading}
-        />
+            disabled={!discussionsLoadable || discussionsLoading}>
+            {discussionsLoading && <LoadingRowIcon visibilityDelay={0}/>}
+        </VisibilityTrigger>
         </>
     );
 }
