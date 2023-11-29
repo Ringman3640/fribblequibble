@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" viewBox="0 0 32 32">
-  <ellipse fill="none" stroke="currentColor" cx="16" cy="16" rx="12" ry="12">
+  <ellipse fill="none" stroke="currentColor" stroke-width="2" cx="16" cy="16" rx="12" ry="12">
     <animate
       attributeName="cy"
       repeatCount="indefinite"
@@ -19,7 +19,7 @@
       dur="0.6s"
       begin="1s"/>
   </ellipse>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" d="M9,20s4-1 7-1 7 1 7 1">
+  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M9,20s4-1 7-1 7 1 7 1">
     <animate
       attributeName="d"
       repeatCount="indefinite"
@@ -30,7 +30,7 @@
       dur="0.6s"
       begin="1s"/>
   </path>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M 11,13 l 0,0">
+  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4" d="M 11,13 l 0,0">
     <animate
       attributeName="d"
       repeatCount="indefinite"
@@ -43,14 +43,14 @@
     <animate
       attributeName="stroke-width"
       repeatCount="indefinite"
-      values="3;1;3"
+      values="4;2;4"
       keyTimes="0;0.5;1"
       keySplines="0.5 0 0.5 1; 0.5 0 0.5 1;"
       calcMode="spline"
       dur="0.6s"
       begin="1s"/>
   </path>
-  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="3" d="M 21,13 l 0,0">
+  <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="4" d="M 21,13 l 0,0">
     <animate
       attributeName="d"
       repeatCount="indefinite"
@@ -63,7 +63,7 @@
     <animate
       attributeName="stroke-width"
       repeatCount="indefinite"
-      values="3;1;3"
+      values="4;2;4"
       keyTimes="0;0.5;1"
       keySplines="0.5 0 0.5 1; 0.5 0 0.5 1;"
       calcMode="spline"

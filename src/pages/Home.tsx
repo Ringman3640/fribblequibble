@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DiscussionPostLoader, DiscussionSortMethod } from "../features/discussions";
-import { HomepageBlobsIcon, HomeArrowIcon } from "../features/icons";
+import { HomepageBlobsIcon, HomeArrowIcon, LoadingRowIcon } from "../features/icons";
 import { MainContentRegion, SectionHeader, baseLargeButton } from "../features/styles";
 import styled, { css } from "styled-components";
 
