@@ -5,13 +5,21 @@ import { MainContentRegion, SectionHeader } from "../features/styles";
 import { ProfileInfoBar, UserStatistics, UserTopDiscussion } from "../features/users";
 import { useLoadQuibbles } from "../hooks/useLoadQuibbles";
 import { QuibbleList } from "../features/quibbles";
-import { css } from "styled-components";
 import { VisibilityTrigger } from "../components/VisibilityTrigger";
+import { styled, css } from "styled-components";
+import { LoadingRowIcon } from "../features/icons";
 
 const MainContentRegionStyle = css`
     h1 {
         margin-bottom: 30px;
     }
+`;
+
+const CenteredContainer = styled.div`
+    position: fixed;
+    top: 50vh;  
+    left: 50vw;
+    transform: translate(-50%, -50%);
 `
 
 export default function UserProfile() {
@@ -86,7 +94,9 @@ export default function UserProfile() {
             <>
             <NavBar/>
             <MainContentRegion>
-                <h1>Could not find user with ID {id}</h1>
+                <CenteredContainer>
+                    <h1>Could not find user with ID {id}</h1>
+                </CenteredContainer>
             </MainContentRegion>
             </>
         );
@@ -97,7 +107,9 @@ export default function UserProfile() {
             <>
             <NavBar/>
             <MainContentRegion>
-                {/* TODO: Add loading symbol */}
+                <CenteredContainer>
+                    <LoadingRowIcon visibilityDelay={1}/>
+                </CenteredContainer>
             </MainContentRegion>
             </>
         );
@@ -117,7 +129,7 @@ export default function UserProfile() {
             <VisibilityTrigger
                 callback={onLoadVisibilityTrigger}
                 disabled={!quibblesLoadable}>
-                {/* TODO: Add loading symbol */}
+                {quibblesLoading && <LoadingRowIcon visibilityDelay={0}/>}
             </VisibilityTrigger>
         </MainContentRegion>
         </>
