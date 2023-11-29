@@ -1,5 +1,5 @@
 import { LoadingBlobIcon } from "..";
-import { styled, keyframes } from "styled-components";
+import { styled, keyframes, CSSProp } from "styled-components";
 
 const appear = keyframes`
     from {
@@ -10,8 +10,11 @@ const appear = keyframes`
     }
 `;
 
-const IconContainer = styled.div<{$animDelay: number}>`
+const IconContainer = styled.div<{$animDelay: number, $customStyle: CSSProp}>`
     display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
     color: inherit;
 
     &.delay {
@@ -20,6 +23,8 @@ const IconContainer = styled.div<{$animDelay: number}>`
         animation-delay: ${props => props.$animDelay + 's'};
         animation-fill-mode: forwards;
     }
+
+    ${props => props.$customStyle};
 `;
 
 const SingleBlobContainer = styled.div`
@@ -28,14 +33,16 @@ const SingleBlobContainer = styled.div`
 `;
 
 interface LoadingRowIconProps {
-    visibilityDelay?: number
+    visibilityDelay?: number,
+    customCss?: CSSProp
 }
 
-export function LoadingRowIcon({visibilityDelay}: LoadingRowIconProps) {
+export function LoadingRowIcon({visibilityDelay, customCss}: LoadingRowIconProps) {
     return (
         <IconContainer
             className={visibilityDelay !== undefined ? 'delay' : undefined}
-            $animDelay={visibilityDelay || 0}>
+            $animDelay={visibilityDelay || 0}
+            $customStyle={customCss}>
             <SingleBlobContainer>
                 <LoadingBlobIcon delaySeconds={0}/>
             </SingleBlobContainer>
