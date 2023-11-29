@@ -6,10 +6,17 @@ import { FetchMethod } from '../types/BackendFetchInfo';
 import { DiscussionHead, DiscussionVote } from '../features/discussions';
 import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
 import { MainContentRegion, SectionHeader } from '../features/styles';
-import { DiscussionBlobsIcon } from '../features/icons';
+import { DiscussionBlobsIcon, LoadingRowIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
 import { NavBar } from '../components/NavBar';
 import { styled, css } from 'styled-components';
+
+const CenteredContainer = styled.div`
+    position: fixed;
+    top: 50vh;  
+    left: 50vw;
+    transform: translate(-50%, -50%);
+`;
 
 const BlobIconContainer = styled.div`
     position: absolute;
@@ -51,7 +58,9 @@ export default function Discussion() {
             <>
             <NavBar/>
             <MainContentRegion>
-                <h1>{!id ? 'Discussion ID not provided' : 'Could not access discussion'}</h1>
+                <CenteredContainer>
+                    <h1>{!id ? 'Discussion ID not provided' : 'Could not access discussion'}</h1>
+                </CenteredContainer>
             </MainContentRegion>
             </>
         );
@@ -62,7 +71,9 @@ export default function Discussion() {
             <>
             <NavBar/>
             <MainContentRegion>
-                {/* TODO: add loading icon or something */}
+                <CenteredContainer>
+                    <LoadingRowIcon visibilityDelay={1}/>
+                </CenteredContainer>
             </MainContentRegion>
             </>
         );
@@ -91,8 +102,11 @@ export default function Discussion() {
                 discussionChoices={discussionInfo.choices}
                 customCss={QuibbleListStyle}
             />}
-            {quibblesLoadable && 
-            <VisibilityTrigger callback={onLoadVisibilityTrigger}/>}
+            <VisibilityTrigger
+                callback={onLoadVisibilityTrigger}
+                disabled={!quibblesLoadable}>
+                {quibblesLoading && <LoadingRowIcon visibilityDelay={0}/>}
+            </VisibilityTrigger>
         </MainContentRegion>
         </>
     );
