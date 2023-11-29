@@ -27,6 +27,7 @@ const MenuIconButton = styled.button`
 `;
 
 const UtilityMenuStyle = css`
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
     z-index: 2;
 `;
 
@@ -38,14 +39,10 @@ const UtitliyMenuBackdrop = styled.div`
     right: 0px;
     z-index: 1;
     transition: all 0.2s;
+    background-color: transparent;
 
-    &.enabled {
-        backdrop-filter: blur(1px);
-        background-color: rgba(0, 0, 0, 0.1);
-    }
-    &.disabled {
+    &.active {
         pointer-events: none;
-        background-color: transparent;
     }
 `;
 
@@ -76,7 +73,7 @@ export function UtilityMenuButton() {
                 customCss={UtilityMenuStyle}
             />
             <UtitliyMenuBackdrop
-                className={menuHidden ? 'disabled' : 'enabled'}
+                className={menuHidden ? 'active' : undefined}
                 onClick={() => {setMenuHidden(true)}}>
             </UtitliyMenuBackdrop>
         </ContentContainer>
