@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginInfoContext } from "../features/auth";
+import { LoadingRowIcon } from "../features/icons";
 import { styled, CSSProp } from "styled-components";
 
 const MenuContainer = styled.div<{$customCss: CSSProp}>`
@@ -90,7 +91,7 @@ export function UtilityMenu({hidden, customCss}: UtilityMenuProps) {
                 </MenuButton>
             </>}
             {loginInfo === undefined && <>
-                {/* TODO: Add loading symbol */}
+                <LoadingRowIcon/>
             </>}
         </MenuContainer>
     );
