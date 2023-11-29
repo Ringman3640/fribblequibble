@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFetchBackend } from '../hooks/useFetchBackend';
 import { useLoadQuibbles } from '../hooks/useLoadQuibbles';
 import { FetchMethod } from '../types/BackendFetchInfo';
 import { DiscussionHead, DiscussionVote } from '../features/discussions';
-import { QuibbleList, QuibbleEntryBox, QuibbleInfo } from '../features/quibbles';
+import { QuibbleList, QuibbleEntryBox } from '../features/quibbles';
 import { MainContentRegion, SectionHeader } from '../features/styles';
 import { DiscussionBlobsIcon, LoadingRowIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
