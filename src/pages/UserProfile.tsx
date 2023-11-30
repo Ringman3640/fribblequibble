@@ -26,13 +26,14 @@ export default function UserProfile() {
     const {id} = useParams();
     const [userStats, setUserStats] = useState<UserStatistics | null | undefined>(undefined);
     const [topDiscussions, setTopDiscussions] = useState<UserTopDiscussion[] | null | undefined>(undefined);
+    const [serverError, setServerError] = useState<boolean>(false);
     const {quibbles, quibblesLoading, quibblesLoadable, loadNextQuibbles} = useLoadQuibbles({
         type: 'Profile',
         identifier: id || '-1'
     });
 
     useEffect(() => {
-        if (id === undefined) {
+        if (id === undefined || !Number.isInteger(+id)) {
             setUserStats(null);
             return;
         }
@@ -59,6 +60,7 @@ export default function UserProfile() {
         .catch(err => {
             console.error(err);
             setUserStats(null);
+            setServerError(true);
         })
     }
 
@@ -80,6 +82,7 @@ export default function UserProfile() {
         .catch(err => {
             console.error(err);
             setUserStats(null);
+            setServerError(true);
         })
     }
 
@@ -89,32 +92,30 @@ export default function UserProfile() {
         }
     }
 
-    if (userStats === null || topDiscussions === null) {
+    if (!userStats || !topDiscussions || serverError) {
+        let message: React.ReactElement;
+        if (serverError) {
+            message = <h1>A server error has occured, please try again later</h1>;
+        }
+        else if (userStats === null || topDiscussions === null) {
+            message = <h1>{id ? `Could not find user with ID ${id}` : 'No user ID provided'}</h1>;
+        }
+        else {
+            message = <LoadingRowIcon visibilityDelay={1}/>;
+        }
+
         return (
             <>
             <NavBar/>
             <MainContentRegion>
                 <CenteredContainer>
-                    <h1>Could not find user with ID {id}</h1>
+                    {message}
                 </CenteredContainer>
             </MainContentRegion>
             </>
         );
     }
-
-    if (userStats === undefined || topDiscussions === undefined) {
-        return (
-            <>
-            <NavBar/>
-            <MainContentRegion>
-                <CenteredContainer>
-                    <LoadingRowIcon visibilityDelay={1}/>
-                </CenteredContainer>
-            </MainContentRegion>
-            </>
-        );
-    }
-
+    
     return (
         <>
         <NavBar/>
