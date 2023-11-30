@@ -97,7 +97,6 @@ export default function DiscussionSearch() {
                 throw json.message;
             }
             setTopicName(json.topicName);
-            console.log(json.topicName);
         })
         .catch(err => {
             console.error(err);
