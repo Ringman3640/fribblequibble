@@ -50,8 +50,6 @@ export function PopupMessageWrapper({children}: React.PropsWithChildren) {
     const [popupVisible, setPopupVisible] = useState<boolean>(false);
     const timeout = useRef<number | null>(null);
 
-    useEffect(() => {console.log(popupMessage)}, [popupMessage]);
-
     useEffect(() => {
         if (popupVisible) {
             applyDisappearTimeout();
