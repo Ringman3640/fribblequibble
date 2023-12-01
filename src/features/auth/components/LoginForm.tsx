@@ -19,6 +19,9 @@ export function LoginForm() {
             })
         })
         .then(res => {
+            if (res.status === 429) {
+                return Promise.reject(429);
+            }
             return res.json();
         })
         .then(json => {
@@ -29,8 +32,13 @@ export function LoginForm() {
             formInfo.setErrorMsg(json.message);
         })
         .catch(err => {
-            formInfo.setErrorMsg('Connection failed; please try again later');
-            console.error(err);
+            if (err === 429) {
+                formInfo.setErrorMsg('Too many attempts, please try again in a few minutes');
+            }
+            else {
+                formInfo.setErrorMsg('Connection failed, please try again later');
+                console.error(err);
+            }
         });
     }
     
