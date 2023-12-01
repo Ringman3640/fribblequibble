@@ -1,7 +1,9 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginInfoContext } from "../features/auth";
+import { PopupMessageContext } from "../contexts/PopupMessageContext";
 import { LoadingRowIcon } from "../features/icons";
+import { FetchMethod } from "../types/BackendFetchInfo";
 import { styled, CSSProp } from "styled-components";
 
 const MenuContainer = styled.div<{$customCss: CSSProp}>`
@@ -65,8 +67,27 @@ interface UtilityMenuProps {
 }
 
 export function UtilityMenu({hidden, customCss}: UtilityMenuProps) {
-    const {loginInfo, clearLoginInfo} = useContext(LoginInfoContext);
+    const {loginInfo} = useContext(LoginInfoContext);
+    const {setPopupMessage} = useContext(PopupMessageContext);
     const navigate = useNavigate();
+
+    function handleLogout() {
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/logout`, {
+            method: FetchMethod.Post,
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(() => {
+            navigate(0); // refresh page
+        })
+        .catch(err => {
+            console.error(err);
+            setPopupMessage('Unable to logout at this time, please clear cookies');
+        });
+    }
 
     return (
         <MenuContainer
@@ -80,7 +101,7 @@ export function UtilityMenu({hidden, customCss}: UtilityMenuProps) {
                     Profile
                 </MenuButton>
                 <MenuButton
-                    onClick={clearLoginInfo}>
+                    onClick={handleLogout}>
                     Logout
                 </MenuButton>
             </>}
