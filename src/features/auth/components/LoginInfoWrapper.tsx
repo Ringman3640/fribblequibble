@@ -14,9 +14,13 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
     const [loginInfo, setLoginInfo] = useState<LoginInfo>(undefined);
 
     useEffect(() => {
+        refreshLoginInfo();
+    }, []);
+
+    function refreshLoginInfo(): void {
         const accessToken: string | null = getCookie('access_token');
 
-        // In an access token is not found, the user is not logged in
+        // If an access token is not found, the user is not logged in
         if (!accessToken) {
             setLoginInfo(null);
             return;
@@ -68,7 +72,7 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
             console.log(err);
             setLoginInfo(null);
         });
-    }, []);
+    }
 
     function clearLoginInfo(): void {
         setLoginInfo(null);
@@ -77,7 +81,7 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
     }
 
     return (
-        <LoginInfoContext.Provider value={{loginInfo, clearLoginInfo}}>
+        <LoginInfoContext.Provider value={{loginInfo, clearLoginInfo, refreshLoginInfo}}>
             {children}
         </LoginInfoContext.Provider>
     );

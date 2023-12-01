@@ -3,10 +3,12 @@ import { LoginInfo } from "../types/LoginInfo";
 
 interface LoginInfoContent {
     loginInfo: LoginInfo,
-    clearLoginInfo: () => void
+    clearLoginInfo: () => void,
+    refreshLoginInfo: () => void
 }
 
 export const LoginInfoContext = createContext<LoginInfoContent>({
     loginInfo: undefined,
-    clearLoginInfo: () => {}
+    clearLoginInfo: () => {},
+    refreshLoginInfo: () => {}
 });
