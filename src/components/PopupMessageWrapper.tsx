@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PopupMessageContext } from "../contexts/PopupMessageContext";
 import styled from "styled-components";
 
@@ -46,23 +46,32 @@ const PopupMessageContainer = styled.div`
 `;
 
 export function PopupMessageWrapper({children}: React.PropsWithChildren) {
-    const [popupMessage, setPopupMessage] = useState<string>('gamers');
+    const [popupMessage, setPopupMessage] = useState<string>('');
     const [popupVisible, setPopupVisible] = useState<boolean>(false);
+    const timeout = useRef<number | null>(null);
+
+    useEffect(() => {console.log(popupMessage)}, [popupMessage]);
 
     useEffect(() => {
-        let timeout: number;
         if (popupVisible) {
-            timeout = setTimeout(() => {setPopupVisible(false)}, POPUP_DURATION_MS);
-        }
-
-        return () => {
-            clearTimeout(timeout);
+            applyDisappearTimeout();
         }
     }, [popupVisible]);
+
+    function applyDisappearTimeout() {
+        if (timeout.current) {
+            clearTimeout(timeout.current);
+        }
+        timeout.current = setTimeout(() => {
+            setPopupVisible(false);
+            timeout.current = null;
+        }, POPUP_DURATION_MS);
+    }
 
     function showPopupMessage(message: string): void {
         setPopupMessage(message);
         setPopupVisible(true);
+        applyDisappearTimeout();
     }
 
     return (
