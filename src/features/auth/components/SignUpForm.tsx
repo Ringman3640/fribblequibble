@@ -22,11 +22,11 @@ export function SignUpForm() {
             return res.json();
         })
         .then(json => {
-            if (!('error' in json)) {
-                navigate('/');
+            if ('error' in json) {
+                formInfo.setErrorMsg(json.message);
                 return;
             }
-            formInfo.setErrorMsg(json.message);
+            navigate('/discussion');
         })
         .catch(err => {
             formInfo.setErrorMsg('Connection failed; please try again later');

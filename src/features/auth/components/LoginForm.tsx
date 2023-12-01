@@ -33,7 +33,7 @@ export function LoginForm() {
                 return;
             }
             refreshLoginInfo();
-            navigate('/');
+            navigate('/discussion');
         })
         .catch(err => {
             if (err === 429) {
