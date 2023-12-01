@@ -74,14 +74,8 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
         });
     }
 
-    function clearLoginInfo(): void {
-        setLoginInfo(null);
-        document.cookie = "access_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-        document.cookie = "refresh_token= ; expires = Thu, 01 Jan 1970 00:00:00 GMT; path=/;";
-    }
-
     return (
-        <LoginInfoContext.Provider value={{loginInfo, clearLoginInfo, refreshLoginInfo}}>
+        <LoginInfoContext.Provider value={{loginInfo, refreshLoginInfo}}>
             {children}
         </LoginInfoContext.Provider>
     );
