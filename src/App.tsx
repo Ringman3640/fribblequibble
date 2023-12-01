@@ -9,6 +9,7 @@ import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
 import UserProfile from './pages/UserProfile.tsx';
 import './global.css';
+import { PopupMessageWrapper } from './components/PopupMessageWrapper.tsx';
 
 const BackgroundColor = styled.div`
     position: fixed;
@@ -48,7 +49,9 @@ function AppWrapperGrouping({children}: React.PropsWithChildren) {
     return (
         <LoginInfoWrapper>
             <ThemeInfoWrapper>
-                {children}
+                <PopupMessageWrapper>
+                    {children}
+                </PopupMessageWrapper>
             </ThemeInfoWrapper>
         </LoginInfoWrapper>
     );
