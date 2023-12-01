@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { LoginInfoContext } from "../../auth";
+import { PopupMessageContext } from "../../../contexts/PopupMessageContext";
 import { QuibbleInfo } from "..";
 import { baseSmallButton } from "../../styles";
 import { styled, css } from "styled-components";
@@ -69,6 +70,7 @@ interface QuibbleEntryBoxProps {
 
 export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntryBoxProps) {
     const {loginInfo} = useContext(LoginInfoContext);
+    const {setPopupMessage} = useContext(PopupMessageContext);
     const [quibbleEntry, setQuibbleEntry] = useState<string>('');
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
     const entryBoxRef = useRef<HTMLTextAreaElement>(null);
@@ -104,16 +106,25 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
             })
         })
         .then(res => {
+            if (res.status === 429) {
+                return Promise.reject(429);
+            }
             return res.json();
         })
         .then(json => {
             handleAddQuibble(json);
+            setQuibbleEntry('');
+            setPopupMessage('Quibble sent');
         })
         .catch(err => {
+            if (err === 429) {
+                setPopupMessage('Please wait before sending another quibble');
+                return;
+            }
             console.error(err);
+            setPopupMessage('An error has occured, please try again later');
         })
         .finally(() => {
-            setQuibbleEntry('');
             setWaitingAPI(false);
         });
     }
