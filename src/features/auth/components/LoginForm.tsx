@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { UsernamePasswordForm } from "./UsernamePasswordForm";
 import { FormInfo } from "../types/FormInfo";
+import { LoginInfoContext } from "..";
 
 export function LoginForm() {
+    const {refreshLoginInfo} = useContext(LoginInfoContext);
     const navigate = useNavigate();
 
     async function handleSubmit(formInfo: FormInfo): Promise<void> {
@@ -25,11 +28,12 @@ export function LoginForm() {
             return res.json();
         })
         .then(json => {
-            if (!('error' in json)) {
-                navigate('/');
+            if ('error' in json) {
+                formInfo.setErrorMsg(json.message);
                 return;
             }
-            formInfo.setErrorMsg(json.message);
+            refreshLoginInfo();
+            navigate('/');
         })
         .catch(err => {
             if (err === 429) {
