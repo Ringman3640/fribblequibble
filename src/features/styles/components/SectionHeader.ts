@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const SectionHeader = styled.h3`
-    margin-top: 30px;
-    margin-bottom: 10px;
+    margin-top: var(--section-margin-top);
+    margin-bottom: var(--section-margin-bottom);
 
     color: ${props => props.theme.primaryColor};
 `;
