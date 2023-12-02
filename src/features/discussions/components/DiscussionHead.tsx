@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { DiscussionInfo, DiscussionInfoError } from "../types/DiscussionInfo";
-import { SectionHeader } from "../../styles";
+import { DiscussionPageContent } from "./DiscussionPageContent";
 import styled from "styled-components";
 
 const ContentContainer = styled.div`
@@ -38,12 +38,6 @@ const DescrpitionText = styled.p`
     margin-top: 30px;
 `;
 
-const ConditionsContainer = styled.div`
-    ul {
-        margin-top: 10px;
-    }
-`;
-
 interface DiscussionHeadProps {
     discussionInfo: DiscussionInfo | DiscussionInfoError | undefined
 }
@@ -79,16 +73,8 @@ export function DiscussionHead({ discussionInfo }: DiscussionHeadProps) {
                 </DateText>
             </TopicDateContainer>
             <DescrpitionText>{discussionInfo.description}</DescrpitionText>
-            {discussionInfo.conditions ? (
-                <ConditionsContainer>
-                    <SectionHeader>Conditions</SectionHeader>
-                    <ul>
-                        {discussionInfo.conditions.map((condition, idx) =>
-                        <li key={idx}>{condition}</li>
-                        )}
-                    </ul>
-                </ConditionsContainer>
-            ) : null}
+            {discussionInfo.pageContent && 
+            <DiscussionPageContent pageContent={discussionInfo.pageContent}/>}
         </ContentContainer>
     );
 }

@@ -6,7 +6,7 @@ export interface DiscussionInfo {
     topic: string,
     topicId: number,
     description?: string,
-    conditions?: string[],
+    pageContent?: string,
     choices?: DiscussionChoiceInfo[]
 }
 
