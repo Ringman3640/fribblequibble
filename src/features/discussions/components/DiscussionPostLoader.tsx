@@ -131,6 +131,10 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
         <NotificationText>
             Failed to load discussions
         </NotificationText>}
+        {!loadFailed && !discussionsLoadable && discussions.length === 0 &&
+        <NotificationText>
+            No discussions found
+        </NotificationText>}
         <VisibilityTrigger
             callback={() => setGetDiscussions(true)}
             customCss={VisibilityTriggerCss}
