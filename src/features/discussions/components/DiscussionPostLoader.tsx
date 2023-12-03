@@ -1,8 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DiscussionPostInfo, DiscussionPostList, DiscussionSortMethod } from "..";
 import { VisibilityTrigger } from "../../../components/VisibilityTrigger";
 import { LoadingRowIcon } from "../../icons";
-import { css } from "styled-components";
+import { PopupMessageContext } from "../../../contexts/PopupMessageContext";
+import { styled, css } from "styled-components";
+
+const NotificationText = styled.p`
+    text-align: center;
+`;
+
+const VisibilityTriggerCss = css`
+    width: 100%;
+    height: 60px;
+`;
 
 interface DiscussionPostLoaderProps {
     sortMethod: DiscussionSortMethod,
@@ -12,17 +22,14 @@ interface DiscussionPostLoaderProps {
     maxRetrieves?: number
 }
 
-const VisibilityTriggerCss = css`
-    width: 100%;
-    height: 60px;
-`;
-
 export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount, maxRetrieves}: DiscussionPostLoaderProps) {
+    const {setPopupMessage} = useContext(PopupMessageContext);
     const [discussions, setDiscussions] = useState<DiscussionPostInfo[]>([]);
     const [discussionsLoading, setDiscussionsLoading] = useState<boolean>(false);
     const [discussionsLoadable, setDiscussionsLoadable] = useState<boolean>(false);
     const [getDiscussions, setGetDiscussions] = useState<boolean>(false);
     const [totalRetrieves, setTotalRetrieves] = useState<number>(0);
+    const [loadFailed, setLoadFailed] = useState<boolean>(false);
     const discussionIndex = useRef<number>(0);
     const searchTerm = useRef<string>('');
 
@@ -95,8 +102,10 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
             }
         })
         .catch(err => {
+            console.error(err);
             setDiscussionsLoadable(false);
-            console.log(err);
+            setLoadFailed(true);
+            setPopupMessage('Could not get discussions, please try again later');
         })
         .finally(() => {
             setDiscussionsLoading(false);
@@ -118,6 +127,10 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
     return (
         <>
         <DiscussionPostList discussionPosts={discussions}/>
+        {loadFailed &&
+        <NotificationText>
+            Failed to load discussions
+        </NotificationText>}
         <VisibilityTrigger
             callback={() => setGetDiscussions(true)}
             customCss={VisibilityTriggerCss}
