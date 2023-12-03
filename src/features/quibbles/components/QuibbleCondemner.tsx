@@ -3,6 +3,7 @@ import { QuibbleInfo } from "..";
 import { LoginInfoContext } from "../../auth";
 import { CondemnIcon } from "../../icons";
 import styled from "styled-components";
+import { PopupMessageContext } from "../../../contexts/PopupMessageContext";
 
 const CondemnButton = styled.button`
     background-color: transparent;
@@ -28,6 +29,7 @@ interface QuibbleCondemnerProps {
 
 export function QuibbleCondemner({quibbleInfo, handleCondemn, visualOnly}: QuibbleCondemnerProps) {
     const {loginInfo} = useContext(LoginInfoContext);
+    const {setPopupMessage} = useContext(PopupMessageContext);
     const [isCondemned, setIsCondemned] = useState<boolean | undefined>(quibbleInfo.condemned);
     const [waitingForApi, setWaitingForAPI] = useState<boolean>(false);
 
@@ -45,24 +47,27 @@ export function QuibbleCondemner({quibbleInfo, handleCondemn, visualOnly}: Quibb
             return res.json();
         })
         .then(json => {
-            if ('error' in json) {
-                return;
+            setIsCondemned(true);
+            if (!('error' in json)) {
+                handleCondemn();
             }
-            handleCondemn();
+        })
+        .catch(err => {
+            console.error(err);
+            setPopupMessage('Could not condemn quibble, please try again later');
         })
         .finally(() => {
-            setIsCondemned(true);
             setWaitingForAPI(false);
         });
     }
 
     return (
         <CondemnButton 
-            disabled={isCondemned || !loginInfo || waitingForApi || visualOnly} 
+            disabled={isCondemned || !loginInfo || waitingForApi || visualOnly}
             onClick={clickHandler}>
             <CondemnIcon 
                 active={isCondemned || false}
-                loading={visualOnly}
+                loading={waitingForApi || visualOnly}
             />
         </CondemnButton>
     );
