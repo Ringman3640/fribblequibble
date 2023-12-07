@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FormLabel, ShortTextBox, baseSmallButton } from "../../styles";
+import { FormLabel, FormTextBox, baseSmallButton } from "../../styles";
 import { FormInfo } from "../types/FormInfo";
 import styled from "styled-components";
 
@@ -79,16 +79,16 @@ export function UsernamePasswordForm({submitText, onSubmit}: UsernamePasswordFor
     return (
         <form onSubmit={handleSubmit}>
             <FormLabel htmlFor='usernameIn'>Username</FormLabel>
-            <ShortTextBox 
+            <FormTextBox 
                 value={username}
-                onChange={event => setUsername(event.target.value)}
+                setValue={setUsername}
                 name='usernameIn'
                 disabled={waitingForAPI}
             />
             <FormLabel htmlFor='passwordIn'>Password</FormLabel>
-            <ShortTextBox
+            <FormTextBox
                 value={password}
-                onChange={event => setPassword(event.target.value)}
+                setValue={setPassword}
                 name='passwordIn'
                 disabled={waitingForAPI}
             />
