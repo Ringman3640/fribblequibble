@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { baseSmallButton } from "../../styles";
+import { ShortTextBox, baseSmallButton } from "../../styles";
 import { FormInfo } from "../types/FormInfo";
 import styled from "styled-components";
 
@@ -9,19 +9,6 @@ const EntryBoxLabel = styled.label`
     margin-bottom: 6px;
     
     color: ${props => props.theme.primaryColor};
-`;
-
-const EntryBox = styled.input`
-    display: block;
-    width: 300px;
-    padding: var(--medium-text-padding);
-    margin-bottom: 30px;
-    border: 0px;
-    border-radius: var(--medium-border-radius);
-    font-size: var(--p-font-size);
-
-    background-color: ${props => props.theme.backgroundColorLight};
-    color: ${props => props.theme.primaryColorLight};
 `;
 
 const ErrorText = styled.p`
@@ -100,14 +87,14 @@ export function UsernamePasswordForm({submitText, onSubmit}: UsernamePasswordFor
     return (
         <form onSubmit={handleSubmit}>
             <EntryBoxLabel htmlFor='usernameIn'>Username</EntryBoxLabel>
-            <EntryBox 
+            <ShortTextBox 
                 value={username}
                 onChange={event => setUsername(event.target.value)}
                 name='usernameIn'
                 disabled={waitingForAPI}
             />
             <EntryBoxLabel htmlFor='passwordIn'>Password</EntryBoxLabel>
-            <EntryBox
+            <ShortTextBox
                 value={password}
                 onChange={event => setPassword(event.target.value)}
                 name='passwordIn'
