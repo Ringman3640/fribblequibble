@@ -8,6 +8,7 @@ import Discussion from './pages/Discussion.tsx'
 import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
 import UserProfile from './pages/UserProfile.tsx';
+import CreateDiscussion from './pages/CreateDiscussion.tsx';
 import './global.css';
 import { PopupMessageWrapper } from './components/PopupMessageWrapper.tsx';
 
@@ -69,6 +70,7 @@ export default function App() {
                 <Route path='/login' element={<Login />} />
                 <Route path='/signup' element={<SignUp />} />
                 <Route path='/user/:id' element={<UserProfile />} />
+                <Route path='/create' element={<CreateDiscussion />} />
             </Routes>
         </AppWrapperGrouping>
     );
