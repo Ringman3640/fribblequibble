@@ -47,6 +47,7 @@ export function FormTextBox({value, setValue, length, maxChars, hideInput, name,
             value={value}
             onChange={handleChange}
             name={name}
-            disabled={disabled}/>
+            disabled={disabled}
+        />
     );
 }
