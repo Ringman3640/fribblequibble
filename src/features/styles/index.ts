@@ -1,3 +1,4 @@
+export * from './components/FormLabel'
 export * from './components/ShortTextBox'
 export * from './components/WideTextBox'
 export * from './components/SectionHeader'
