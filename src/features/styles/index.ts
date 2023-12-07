@@ -1,6 +1,5 @@
 export * from './components/FormLabel'
-export * from './components/ShortTextBox'
-export * from './components/WideTextBox'
+export * from './components/FormTextBox'
 export * from './components/SectionHeader'
 export * from './components/MainContentRegion'
 export * from './css/baseLargeButton'
