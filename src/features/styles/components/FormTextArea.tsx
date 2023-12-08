@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import { baseTextInputRegion } from "..";
+import { styled, CSSProp } from "styled-components";
 
-const TextArea = styled.textarea`
+const TextArea = styled.textarea<{$customStyle: CSSProp}>`
     ${baseTextInputRegion};
     resize: none;
     width: min(300px, 100%);
@@ -17,6 +17,8 @@ const TextArea = styled.textarea`
     &.maximum {
         width: 100%;
     }
+
+    ${props => props.$customStyle};
 `;
 
 interface FormTextAreaProps {
@@ -27,9 +29,10 @@ interface FormTextAreaProps {
     maxChars?: number,
     name?: string,
     disabled?: boolean,
+    customCss?: CSSProp
 }
 
-export function FormTextArea({value, setValue, length, height, maxChars, name, disabled}: FormTextAreaProps) {
+export function FormTextArea({value, setValue, length, height, maxChars, name, disabled, customCss}: FormTextAreaProps) {
     function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
         if (maxChars && event.target.value.length > maxChars) {
             setValue(event.target.value.substring(0, maxChars));
@@ -62,6 +65,7 @@ export function FormTextArea({value, setValue, length, height, maxChars, name, d
             name={name}
             disabled={disabled}
             rows={rowCount}
+            $customStyle={customCss}
         />
     );
 }

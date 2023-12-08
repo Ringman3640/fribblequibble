@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import { baseTextInputRegion } from "..";
+import { styled, CSSProp } from "styled-components";
 
-export const TextBox = styled.input`
+export const TextBox = styled.input<{$customStyle: CSSProp}>`
     ${baseTextInputRegion};
     width: min(300px, 100%);
 
@@ -16,6 +16,8 @@ export const TextBox = styled.input`
     &.maximum {
         width: 100%;
     }
+
+    ${props => props.$customStyle};
 `;
 
 interface FormTextBoxProps {
@@ -26,9 +28,10 @@ interface FormTextBoxProps {
     hideInput?: boolean,
     name?: string,
     disabled?: boolean,
+    customCss?: CSSProp
 }
 
-export function FormTextBox({value, setValue, length, maxChars, hideInput, name, disabled}: FormTextBoxProps) {
+export function FormTextBox({value, setValue, length, maxChars, hideInput, name, disabled, customCss}: FormTextBoxProps) {
     const targetLength = length || 'short';
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -48,6 +51,7 @@ export function FormTextBox({value, setValue, length, maxChars, hideInput, name,
             onChange={handleChange}
             name={name}
             disabled={disabled}
+            $customStyle={customCss}
         />
     );
 }
