@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { LoginInfoContext } from "../features/auth";
-import { FormLabel, FormTextArea, FormTextBox, MainContentRegion, baseSmallButton, baseTextInputRegion } from "../features/styles";
+import { FormLabel, FormTextArea, FormTextBox, MainContentRegion, baseLargeButton, baseSmallButton, baseTextInputRegion } from "../features/styles";
 import { ErrorDisplay } from "../components/ErrorDisplay";
-import styled from "styled-components";
 import { PopupMessageContext } from "../contexts/PopupMessageContext";
+import { styled, css } from "styled-components";
 
 const TITLE_MAX_LENGTH = import.meta.env.VITE_DISCUSSION_TITLE_MAX_LENGTH;
 const TOPIC_MAX_LENGTH = import.meta.env.VITE_DISCUSSION_TOPIC_MAX_LENGTH;
@@ -16,6 +16,26 @@ const PageForm = styled.form`
 
 const DatalistInput = styled.input`
     ${baseTextInputRegion};
+`;
+
+const ChoiceTextBoxCss = css`
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 10px;
+`;
+
+const ChoiceAddButton = styled.button`
+    ${baseSmallButton};
+`;
+
+const ChoiceList = styled.div`
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+`;
+
+const ChoiceItem = styled.button`
+    ${baseLargeButton};
 `;
 
 const SubmitButton = styled.input`
@@ -34,6 +54,8 @@ export default function CreateDiscussion() {
     const [topic, setTopic] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [content, setContent] = useState<string>('');
+    const [choiceText, setChoiceText] = useState<string>('');
+    const [choices, setChoices] = useState<string[]>([]);
     const [topicList, setTopicList] = useState<TopicInfo[]>([]);
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
 
@@ -142,6 +164,17 @@ export default function CreateDiscussion() {
         setWaitingAPI(false);
     }
 
+    function handleAddChoice() {
+        if (!choices.includes(choiceText)) {
+            setChoices([...choices, choiceText]);
+        }
+        setChoiceText('');
+    }
+
+    function removeChoice(choiceName: string) {
+        setChoices(choices.filter(choice => choice !== choiceName));
+    }
+
     if (!loginInfo || loginInfo.accessLevel < import.meta.env.VITE_ACCESS_LEVEL_ADMIN) {
         return (
             <>
@@ -195,6 +228,26 @@ export default function CreateDiscussion() {
                     length='maximum'
                     height='large'
                 />
+                <FormLabel htmlFor='choiceIn'>Choices</FormLabel>
+                <FormTextBox
+                    value={choiceText}
+                    setValue={setChoiceText}
+                    customCss={ChoiceTextBoxCss}
+                />
+                <ChoiceAddButton
+                    onClick={handleAddChoice}
+                    disabled={!choiceText}>
+                    Add
+                </ChoiceAddButton>
+                <ChoiceList>
+                    {choices.map(choice =>
+                        <ChoiceItem 
+                            key={choice}
+                            onClick={() => removeChoice(choice)}>
+                            {choice}
+                        </ChoiceItem>
+                    )}
+                </ChoiceList>
                 <SubmitButton
                     type='submit'
                     disabled={!title || !topic || waitingAPI}
