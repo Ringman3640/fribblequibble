@@ -4,6 +4,7 @@ const RegionContainer = styled.div<{$customCss?: CSSProp}>`
     position: relative;
     margin: auto;
     margin-top: 140px;
+    margin-bottom: 80px;
     width: var(--main-content-width);
     ${props => props.$customCss};
 
