@@ -33,7 +33,31 @@ const OptionButton = styled.button`
     &.selected {
         background-color: ${props => props.theme.backgroundColorLight};
     }
-`
+
+    @media only screen and (max-width: 630px) {
+        display: none;
+    }
+`;
+
+const OptionDropdown = styled.select`
+    display: none;
+    padding: var(--medium-text-padding);
+    border: 0px;
+    border-radius: var(--medium-border-radius);
+    font-size: var(--p-font-size);
+
+    background-color: ${props => props.theme.backgroundColorLight};
+
+    option {
+        background-color: inherit;
+
+        color: ${props => props.theme.primaryColorLight};
+    }
+
+    @media only screen and (max-width: 630px) {
+        display: block;
+    }
+`;
 
 interface SortMethodSelectorProps {
     currentMethod: DiscussionSortMethod,
@@ -70,6 +94,13 @@ export function SortMethodSelector({currentMethod, handleSortChange, customStyle
                 onClick={() => handleSortChange(DiscussionSortMethod.Old)}>
                 Old
             </OptionButton>
+            <OptionDropdown onChange={event => handleSortChange(event.target.value as DiscussionSortMethod)}>
+                <option value={DiscussionSortMethod.Acvitity}>Activity</option>
+                <option value={DiscussionSortMethod.Quibbles}>Quibbles</option>
+                <option value={DiscussionSortMethod.Votes}>Votes</option>
+                <option value={DiscussionSortMethod.New}>New</option>
+                <option value={DiscussionSortMethod.Old}>Old</option>
+            </OptionDropdown>
         </ContentContainer>
     );
 }
