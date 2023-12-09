@@ -7,6 +7,10 @@ import styled from "styled-components";
 const InfoBar = styled.div`
     display: flex;
     gap: 20px;
+
+    @media only screen and (max-width: 840px) {
+        flex-direction: column;
+    }
 `;
 
 const InfoBlock = styled.div`
