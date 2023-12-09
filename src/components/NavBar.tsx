@@ -10,12 +10,12 @@ const NavBarContainer = styled.div`
     top: 0px;
     left: 0px;
     right: 0px;
-    height: var(--nav-bar-height);
     padding: var(--nav-bar-padding);
 
     & > * {
         margin-top: auto;
         margin-bottom: auto;
+
     }
     a {
         text-decoration: none;
@@ -38,10 +38,22 @@ const SearchBarContainer = styled.div`
     top: calc(var(--nav-bar-height) / 2);
     transform: translate(-50%, -50%);
     width: var(--main-content-width);
+
+    @media only screen and (max-width: 1115px) {
+        position: static;
+        left: auto;
+        top: auto;
+        transform: none;
+        flex-basis: auto;
+        flex: 1 1 auto;
+    }
+    @media only screen and (max-width: 580px) {
+        display: none;
+    }
 `;
 
 const SearchBarStyle = css`
-    width: 500px;
+    width: min(500px, 100%);
 `;
 
 const UtilityMenuContainer = styled.div`
