@@ -88,52 +88,69 @@ export default function CreateDiscussion() {
         event.preventDefault();
         setWaitingAPI(true);
 
-        let topicId: number | null = null;
-        for (const topicInfo of topicList) {
-            if (topicInfo.name === topic) {
-                topicId = topicInfo.id;
-                break;
+        try {
+            let topicId: number | null = null;
+            for (const topicInfo of topicList) {
+                if (topicInfo.name === topic) {
+                    topicId = topicInfo.id;
+                    break;
+                }
             }
-        }
-        if (topicId === null) {
-            await fetch(`${import.meta.env.VITE_BACKEND_URL}/topic`, {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    'name': topic
-                })
-            })
-            .then(res => {
-                return res.json();
-            })
-            .then(json => {
-                topicId = json.topicId;
-                setTopicList([...topicList, { id: json.topicId, name: topic }])
-                console.log('topic created');
-            })
-            .catch(err => {
-                console.error(err);
-                setPopupMessage('Failed to add topic (check logs)');
-            });
-            console.log('done with create topic fetch');
-        }
-        if (topicId === null) {
-            return;
-        }
+            if (topicId === null) {
+                try {
+                    topicId = await postTopic(topic);
+                } catch(err) {
+                    setPopupMessage('Failed to add topic (check logs)');
+                    throw err;
+                }
+            }
 
+            try {
+                await postDiscussion(title, topicId, description, content);
+                setPopupMessage('Successfully created discussion post');
+                setTitle('');
+                setTopic('');
+                setDescription('');
+                setContent('');
+            } catch(err) {
+                setPopupMessage('Failed to post discussion (check logs)');
+                throw err;
+            }
+        } catch(err) {
+            console.error(err);
+        } finally {
+            setWaitingAPI(false);
+        }
+    }
+
+    async function postTopic(topicName: string): Promise<number> {
+        const apiRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/topic`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'name': topicName
+            })
+        })
+        .then(res => res.json());
+
+        if ('error' in apiRes) {
+            throw apiRes;
+        }
+        return apiRes.topicId;
+    }
+
+    async function postDiscussion(title: string, topicId: number, description?: string, content?: string): Promise<void> {
         const discussionBody: any = {};
         discussionBody['title'] = title;
         discussionBody['topic-id'] = +topicId;
         description && (discussionBody['description'] = description);
         content && (discussionBody['page-content'] = content);
 
-        console.log(discussionBody);
-
-        await fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion`, {
+        return fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -142,26 +159,12 @@ export default function CreateDiscussion() {
             },
             body: JSON.stringify(discussionBody)
         })
-        .then(res => {
-            return res.json();
-        })
+        .then(res => res.json())
         .then(json => {
             if ('error' in json) {
-                console.error(json);
-                return Promise.reject();
+                throw json;
             }
-            setPopupMessage('Successfully created discussion post');
-            setTitle('');
-            setTopic('');
-            setDescription('');
-            setContent('');
-        })
-        .catch(err => {
-            err && console.error(err);
-            setPopupMessage('Failed to post discussion (check logs)');
         });
-
-        setWaitingAPI(false);
     }
 
     function handleAddChoice() {
