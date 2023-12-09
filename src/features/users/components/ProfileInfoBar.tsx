@@ -38,6 +38,7 @@ const TopDiscussionRow = styled.div`
         flex: 1;
         margin-top: 8px;
         overflow: hidden;
+        white-space: nowrap
     }
     p:nth-child(1) {
         flex: none;
