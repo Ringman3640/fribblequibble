@@ -105,8 +105,9 @@ export default function CreateDiscussion() {
                 }
             }
 
+            let discussionId: number | null = null;
             try {
-                await postDiscussion(title, topicId, description, content);
+                discussionId = await postDiscussion(title, topicId, description, content);
                 setPopupMessage('Successfully created discussion post');
                 setTitle('');
                 setTopic('');
@@ -116,6 +117,16 @@ export default function CreateDiscussion() {
                 setPopupMessage('Failed to post discussion (check logs)');
                 throw err;
             }
+
+            for (const choice of choices) {
+                try {
+                    await postDiscussionChoice(choice, discussionId);
+                } catch(err) {
+                    console.error(err);
+                    setPopupMessage('A choice failed to post (check logs)');
+                }
+            }
+            setChoices([]);
         } catch(err) {
             console.error(err);
         } finally {
@@ -143,14 +154,14 @@ export default function CreateDiscussion() {
         return apiRes.topicId;
     }
 
-    async function postDiscussion(title: string, topicId: number, description?: string, content?: string): Promise<void> {
+    async function postDiscussion(title: string, topicId: number, description?: string, content?: string): Promise<number> {
         const discussionBody: any = {};
         discussionBody['title'] = title;
         discussionBody['topic-id'] = +topicId;
         description && (discussionBody['description'] = description);
         content && (discussionBody['page-content'] = content);
 
-        return fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion`, {
+        const apiRes = await fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion`, {
             method: 'POST',
             credentials: 'include',
             headers: {
@@ -158,6 +169,27 @@ export default function CreateDiscussion() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(discussionBody)
+        })
+        .then(res => res.json());
+
+        if ('error' in apiRes) {
+            throw apiRes;
+        }
+        return apiRes.discussionId;
+    }
+
+    async function postDiscussionChoice(choice: string, discussionId: number): Promise<void> {
+        const fetchBody: any = {};
+        fetchBody['choice-name'] = choice;
+
+        return fetch(`${import.meta.env.VITE_BACKEND_URL}/discussion/${discussionId}/choice`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(fetchBody)
         })
         .then(res => res.json())
         .then(json => {
