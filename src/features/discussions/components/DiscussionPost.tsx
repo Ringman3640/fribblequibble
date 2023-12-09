@@ -67,6 +67,10 @@ const IconContainer = styled.div`
 const TopicDateRow = styled.div`
     display: flex;
     gap: 20px;
+
+    @media only screen and (max-width: 630px) {
+        display: block;
+    }
 `;
 
 const TopicText = styled.h3`
