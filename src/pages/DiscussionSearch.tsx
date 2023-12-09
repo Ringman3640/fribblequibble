@@ -40,6 +40,10 @@ const SearchSortBar = styled.div`
     row-gap: 10px;
     margin-top: 30px;
     margin-bottom: 30px;
+
+    @media only screen and (max-width: 630px) {
+        flex-direction: column;
+    }
 `;
 
 const SearchBarStyle = css`
