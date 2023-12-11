@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-const DEFAULT_ERROR_TITLE = 'Uh oh...';
-
 const ContentContainer  = styled.div`
     position: fixed;
     top: 50vh;
@@ -17,15 +15,23 @@ const ErrorTitle = styled.h1`
     margin-bottom: var(--section-margin-bottom);
 `;
 
+export enum ErrorDisplayTitle {
+    Invalid = 'Invalid',
+    Unauthorized = 'Unauthorized',
+    NotFound = 'Not found',
+    ServerError = 'Server error',
+    Unspecified = 'Uh oh...'
+}
+
 interface ErrorDisplayProps {
-    title?: string,
+    title?: ErrorDisplayTitle,
     children?: React.ReactNode
 }
 
 export function ErrorDisplay({title, children}: ErrorDisplayProps) {
     return (
         <ContentContainer>
-            <ErrorTitle>{title || DEFAULT_ERROR_TITLE}</ErrorTitle>
+            <ErrorTitle>{title || ErrorDisplayTitle.Unspecified}</ErrorTitle>
             {children}
         </ContentContainer>
     );
