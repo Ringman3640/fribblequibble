@@ -6,16 +6,8 @@ import { FetchMethod } from "../types/BackendFetchInfo";
 import { NavBar } from "../components/NavBar";
 import { DiscussionSearchBlobsIcon } from "../features/icons/components/DiscussionSearchBlobsIcon";
 import { MainContentRegion } from "../features/styles";
+import { ErrorDisplay, ErrorDisplayType } from "../components/ErrorDisplay";
 import { styled, css } from "styled-components";
-
-const ErrorScreen = styled.h1`
-    position: fixed;
-    left: 0px;
-    right: 0px;
-    top: 50%;
-    transform: translateY(-50%);
-    text-align: center;
-`;
 
 const BlobIconContainer = styled.div`
     position: absolute;
@@ -131,9 +123,9 @@ export default function DiscussionSearch() {
         return (
             <>
             <NavBar/>
-            <ErrorScreen>
-                Topic ID {topicId} does not exist
-            </ErrorScreen>
+            <ErrorDisplay title={ErrorDisplayType.NotFound}>
+                No topic with ID '{topicId}' was found
+            </ErrorDisplay>
             </>
         );
     }

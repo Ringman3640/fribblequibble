@@ -10,6 +10,7 @@ import { DiscussionBlobsIcon, LoadingRowIcon } from '../features/icons';
 import { VisibilityTrigger } from '../components/VisibilityTrigger';
 import { NavBar } from '../components/NavBar';
 import { styled, css } from 'styled-components';
+import { ErrorDisplay, ErrorDisplayType } from '../components/ErrorDisplay';
 
 const CenteredContainer = styled.div`
     position: fixed;
@@ -57,11 +58,15 @@ export default function Discussion() {
         return (
             <>
             <NavBar/>
-            <MainContentRegion>
-                <CenteredContainer>
-                    <h1>{!id ? 'Discussion ID not provided' : 'Could not access discussion'}</h1>
-                </CenteredContainer>
-            </MainContentRegion>
+            {!id ?
+                <ErrorDisplay title={ErrorDisplayType.Invalid}>
+                    A discussion ID was not specified
+                </ErrorDisplay>
+                :
+                <ErrorDisplay title={ErrorDisplayType.ServerError}>
+                    There was either a server error, or no discussion with ID '{id}' was found
+                </ErrorDisplay>
+            }
             </>
         );
     }

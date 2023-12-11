@@ -8,6 +8,7 @@ import { QuibbleList } from "../features/quibbles";
 import { VisibilityTrigger } from "../components/VisibilityTrigger";
 import { styled, css } from "styled-components";
 import { LoadingRowIcon } from "../features/icons";
+import { ErrorDisplay, ErrorDisplayType } from "../components/ErrorDisplay";
 
 const MainContentRegionStyle = css`
     h1 {
@@ -92,26 +93,41 @@ export default function UserProfile() {
         }
     }
 
-    if (!userStats || !topDiscussions || serverError) {
-        let message: React.ReactElement;
-        if (serverError) {
-            message = <h1>A server error has occured, please try again later</h1>;
-        }
-        else if (userStats === null || topDiscussions === null) {
-            message = <h1>{id ? `Could not find user with ID ${id}` : 'No user ID provided'}</h1>;
-        }
-        else {
-            message = <LoadingRowIcon visibilityDelay={1}/>;
-        }
-
+    if (userStats === undefined && topDiscussions === undefined) {
         return (
             <>
             <NavBar/>
             <MainContentRegion>
                 <CenteredContainer>
-                    {message}
+                    <LoadingRowIcon visibilityDelay={1}/>
                 </CenteredContainer>
             </MainContentRegion>
+            </>
+        );
+    }
+
+    if (!userStats || !topDiscussions || serverError) {
+        let errorTitle: ErrorDisplayType;
+        let errorMessage: string;
+        if (serverError) {
+            errorTitle = ErrorDisplayType.ServerError;
+            errorMessage = 'Unable to get use profile, please try again later';
+        }
+        else if (id === undefined) {
+            errorTitle = ErrorDisplayType.Invalid;
+            errorMessage = 'A user ID was not specified';
+        }
+        else {
+            errorTitle = ErrorDisplayType.NotFound;
+            errorMessage = `No user with ID '${id}' was found`;
+        }
+
+        return (
+            <>
+            <NavBar/>
+            <ErrorDisplay title={errorTitle}>
+                {errorMessage}
+            </ErrorDisplay>
             </>
         );
     }
