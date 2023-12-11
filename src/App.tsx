@@ -11,6 +11,7 @@ import UserProfile from './pages/UserProfile.tsx';
 import CreateDiscussion from './pages/CreateDiscussion.tsx';
 import './global.css';
 import { PopupMessageWrapper } from './components/PopupMessageWrapper.tsx';
+import NewUserWelcome from './pages/NewUserWelcome.tsx';
 
 const BackgroundColor = styled.div`
     position: fixed;
@@ -71,6 +72,7 @@ export default function App() {
                 <Route path='/signup' element={<SignUp />} />
                 <Route path='/user/:id' element={<UserProfile />} />
                 <Route path='/create' element={<CreateDiscussion />} />
+                <Route path='/welcome' element={<NewUserWelcome />} />
             </Routes>
         </AppWrapperGrouping>
     );
