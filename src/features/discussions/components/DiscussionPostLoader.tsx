@@ -133,18 +133,22 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
         <>
         <DiscussionPostList discussionPosts={discussions}/>
         {loadFailed &&
-        <NotificationText>
-            Failed to load discussions
-        </NotificationText>}
+            <NotificationText>
+                Failed to load discussions
+            </NotificationText>
+        }
         {noDiscussions &&
-        <NotificationText>
-            No discussions found
-        </NotificationText>}
+            <NotificationText>
+                No discussions found
+            </NotificationText>
+        }
         <VisibilityTrigger
             callback={() => setGetDiscussions(true)}
             customCss={VisibilityTriggerCss}
             disabled={!discussionsLoadable || discussionsLoading}>
-            {discussionsLoading && <LoadingRowIcon visibilityDelay={0}/>}
+            {discussionsLoading &&
+                <LoadingRowIcon visibilityDelay={0}/>
+            }
         </VisibilityTrigger>
         </>
     );
