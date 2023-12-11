@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
 import { LoginInfoContext } from "../features/auth";
 import { FormLabel, FormTextArea, FormTextBox, MainContentRegion, baseLargeButton, baseSmallButton, baseTextInputRegion } from "../features/styles";
-import { ErrorDisplay } from "../components/ErrorDisplay";
+import { ErrorDisplay, ErrorDisplayType } from "../components/ErrorDisplay";
 import { PopupMessageContext } from "../contexts/PopupMessageContext";
 import { styled, css } from "styled-components";
 
@@ -214,7 +214,7 @@ export default function CreateDiscussion() {
         return (
             <>
             <NavBar/>
-            <ErrorDisplay title='Unauthorized'>
+            <ErrorDisplay title={ErrorDisplayType.Unauthorized}>
                 Only admin-level users can create discussions
             </ErrorDisplay>
             </>
