@@ -124,6 +124,11 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
         });
     }
 
+    const noDiscussions: boolean = !loadFailed
+            && !discussionsLoadable
+            && !discussionsLoading
+            && discussions.length === 0;
+
     return (
         <>
         <DiscussionPostList discussionPosts={discussions}/>
@@ -131,7 +136,7 @@ export function DiscussionPostLoader({sortMethod, search, topicId, retrieveCount
         <NotificationText>
             Failed to load discussions
         </NotificationText>}
-        {!loadFailed && !discussionsLoadable && discussions.length === 0 &&
+        {noDiscussions &&
         <NotificationText>
             No discussions found
         </NotificationText>}
