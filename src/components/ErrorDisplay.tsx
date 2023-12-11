@@ -15,7 +15,7 @@ const ErrorTitle = styled.h1`
     margin-bottom: var(--section-margin-bottom);
 `;
 
-export enum ErrorDisplayTitle {
+export enum ErrorDisplayType {
     Invalid = 'Invalid',
     Unauthorized = 'Unauthorized',
     NotFound = 'Not found',
@@ -24,14 +24,14 @@ export enum ErrorDisplayTitle {
 }
 
 interface ErrorDisplayProps {
-    title?: ErrorDisplayTitle,
+    title?: ErrorDisplayType,
     children?: React.ReactNode
 }
 
 export function ErrorDisplay({title, children}: ErrorDisplayProps) {
     return (
         <ContentContainer>
-            <ErrorTitle>{title || ErrorDisplayTitle.Unspecified}</ErrorTitle>
+            <ErrorTitle>{title || ErrorDisplayType.Unspecified}</ErrorTitle>
             {children}
         </ContentContainer>
     );
