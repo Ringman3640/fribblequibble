@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import { LoginInfoWrapper } from './features/auth';
 import { ThemeInfoWrapper } from './components/ThemeInfoWrapper.tsx';
-import styled, { createGlobalStyle } from 'styled-components';
+import { PopupMessageWrapper } from './components/PopupMessageWrapper.tsx';
+import { styled, createGlobalStyle } from 'styled-components';
 import Home from './pages/Home.tsx';
 import DiscussionSearch from './pages/DiscussionSearch.tsx';
 import Discussion from './pages/Discussion.tsx'
@@ -9,9 +10,8 @@ import Login from './pages/Login.tsx';
 import SignUp from './pages/SignUp.tsx';
 import UserProfile from './pages/UserProfile.tsx';
 import CreateDiscussion from './pages/CreateDiscussion.tsx';
-import './global.css';
-import { PopupMessageWrapper } from './components/PopupMessageWrapper.tsx';
 import NewUserWelcome from './pages/NewUserWelcome.tsx';
+import './global.css';
 
 const BackgroundColor = styled.div`
     position: fixed;
