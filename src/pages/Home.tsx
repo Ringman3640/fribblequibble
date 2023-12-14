@@ -9,6 +9,25 @@ const IntroContainer = styled.div`
     position: relative;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
+`;
+
+const IntroTextContainer = styled.div`
+    position: relative;
+    top: 40vh;
+    left: 40vw;
+    width: fit-content;
+
+    @media only screen and (max-width: 950px) {
+        top: 45vh;
+        left: 50vw;
+        transform: translateX(-50%);
+    }
+    @media only screen and (max-width: 480px) {
+        position: absolute;
+        width: 100%;
+        padding-left: var(--large-text-padding);
+    }
 `;
 
 const BlobIconContainer = styled.div`
@@ -18,24 +37,51 @@ const BlobIconContainer = styled.div`
     width: 600px;
     height: 600px;
     z-index: -8;
-`;
 
-const IntroTextContainer = styled.div`
-    position: relative;
-    top: 40vh;
-    left: 40vw;
+    @media only screen and (max-width: 1180px) {
+        left: -420px;
+    }
+    @media only screen and (max-width: 950px) {
+        top: -400px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 550px;
+        height: 550px;
+    }
+    @media only screen and (max-width: 480px) {
+        top: -300px;
+        width: 400px;
+        height: 400px;
+    }
 `;
 
 const WebsiteLogo = styled.h1`
     font-size: 6rem;
 
     color: ${props => props.theme.secondaryColor};
+
+    @media only screen and (max-width: 1180px) {
+        font-size: 5.6rem;
+    }
+    @media only screen and (max-width: 600px) {
+        font-size: 4.4rem;
+    }
+    @media only screen and (max-width: 480px) {
+        font-size: 3rem;   
+    }
 `;
 
 const WebsiteDescription = styled.p`
     font-size: 1.6rem;
 
     margin-top: 30px;
+
+    @media only screen and (max-width: 1180px) {
+        font-size: 1.5rem;
+    }
+    @media only screen and (max-width: 600px) {
+        font-size: var(--p-font-size);
+    }
 `;
 
 const DiscussionLink = styled(Link)`
@@ -76,7 +122,23 @@ const ArrowIconContainer = styled.div`
         transform: rotate(-8deg);
         color: inherit;
     }
-`
+
+    @media only screen and (max-width: 480px) {
+        left: 40vw;
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+
+        h3 {
+            position: absolute;
+            top: -30px;
+            left: 55px;
+            width: 200px;
+            transform: rotate(-8deg);
+            color: inherit;
+        }
+    }
+`;
 
 const MainRegionStyle = css`
     margin-top: 0px;
