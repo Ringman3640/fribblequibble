@@ -104,6 +104,12 @@ export function UtilityMenu({hidden, customCss}: UtilityMenuProps) {
                     onClick={handleLogout}>
                     Logout
                 </MenuButton>
+                {loginInfo.accessLevel >= import.meta.env.VITE_ACCESS_LEVEL_ADMIN &&
+                    <MenuButton
+                        onClick={() => {navigate('/create')}}>
+                        Create Discussion
+                    </MenuButton>
+                }
             </>}
             {loginInfo === null && <>
                 <MenuButton
