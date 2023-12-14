@@ -2,6 +2,10 @@ import Markdown from "react-markdown";
 import styled from "styled-components";
 
 const MarkdownStyle = styled.div`
+    & > *:first-child {
+        margin-top: var(--section-margin-top);
+    }
+
     h1, h2, h3 {
         margin-top: var(--section-margin-top);
         margin-bottom: var(--section-margin-bottom);
