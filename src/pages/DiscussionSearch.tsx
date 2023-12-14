@@ -64,8 +64,11 @@ export default function DiscussionSearch() {
     const [topicName, setTopicName] = useState<string | undefined | null>(undefined);
 
     useEffect(() => {
-        setSearchTerm(searchParams.get('search') || '');
-        setTopicId(searchParams.get('topic-id') || '');
+        const search = searchParams.get('search') || '';
+        const topicId = searchParams.get('topic-id') || '';
+        document.title = search ? `Discussions - ${search}` : 'Discussions';
+        setSearchTerm(search);
+        setTopicId(topicId);
     }, [searchParams]);
 
     useEffect(() => {

@@ -60,6 +60,7 @@ export default function CreateDiscussion() {
     const [waitingAPI, setWaitingAPI] = useState<boolean>(false);
 
     useEffect(() => {
+        document.title = 'Create Discussion';
         fetch(`${import.meta.env.VITE_BACKEND_URL}/topics`, {
             method: 'GET',
             credentials: 'omit',

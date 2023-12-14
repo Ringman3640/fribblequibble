@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavBar } from "../components/NavBar";
 import { SignUpForm } from "../features/auth";
 import { MainContentRegion, SectionHeader } from "../features/styles";
@@ -17,6 +18,10 @@ const RequirementHeader = styled(SectionHeader)`
 `;
 
 export default function SignUp() {
+    useEffect(() => {
+        document.title = 'Sign Up';
+    }, []);
+
     return (
         <>
         <NavBar/>

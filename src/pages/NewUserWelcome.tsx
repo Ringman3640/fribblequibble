@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NavBar } from "../components/NavBar";
 import { MainContentRegion, SectionHeader } from "../features/styles";
@@ -15,6 +16,10 @@ const Rule = styled.p`
 `;
 
 export default function NewUserWelcome() {
+    useEffect(() => {
+        document.title = 'Welcome';
+    }, []);
+
     return (
         <>
         <NavBar/>

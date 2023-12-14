@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { LoginForm } from "../features/auth";
 import { MainContentRegion } from "../features/styles";
@@ -14,6 +15,10 @@ const RegionStyle = css`
 `;
 
 export default function Login() {
+    useEffect(() => {
+        document.title = 'Login';
+    }, []);
+
     return (
         <>
         <NavBar/>

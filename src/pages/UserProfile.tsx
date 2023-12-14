@@ -43,6 +43,15 @@ export default function UserProfile() {
         loadNextQuibbles(true);
     }, []);
 
+    useEffect(() => {
+        if (userStats) {
+            document.title = userStats.username;
+        }
+        if (userStats === null) {
+            document.title = 'Unknown User';
+        }
+    }, [userStats]);
+
     function loadStatistics(): void {
         fetch(`${import.meta.env.VITE_BACKEND_URL}/user/${id}/statistics`, {
             method: 'GET',

@@ -51,6 +51,15 @@ export default function Discussion() {
         loadNextQuibbles(true);
     }, []);
 
+    useEffect(() => {
+        if (discussionInfo) {
+            document.title = discussionInfo.title;
+        }
+        if (discussionError) {
+            document.title = 'Unknown Discussion';
+        }
+    }, [discussionInfo, discussionError]);
+
     function onLoadVisibilityTrigger(isVisible: boolean) {
         if (!isVisible) {
             return;
