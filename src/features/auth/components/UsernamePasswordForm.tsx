@@ -84,6 +84,7 @@ export function UsernamePasswordForm({submitText, onSubmit}: UsernamePasswordFor
                 setValue={setUsername}
                 name='usernameIn'
                 disabled={waitingForAPI}
+                autocomplete={true}
             />
             <FormLabel htmlFor='passwordIn'>Password</FormLabel>
             <FormTextBox
@@ -91,6 +92,7 @@ export function UsernamePasswordForm({submitText, onSubmit}: UsernamePasswordFor
                 setValue={setPassword}
                 name='passwordIn'
                 disabled={waitingForAPI}
+                hideInput={true}
             />
             {errorMsg.length > 0 && <ErrorText>{errorMsg}</ErrorText>}
             <SubmitButton
