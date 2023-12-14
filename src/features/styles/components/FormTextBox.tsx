@@ -28,10 +28,11 @@ interface FormTextBoxProps {
     hideInput?: boolean,
     name?: string,
     disabled?: boolean,
+    autocomplete?: boolean,
     customCss?: CSSProp
 }
 
-export function FormTextBox({value, setValue, length, maxChars, hideInput, name, disabled, customCss}: FormTextBoxProps) {
+export function FormTextBox({value, setValue, length, maxChars, hideInput, name, disabled, autocomplete, customCss}: FormTextBoxProps) {
     const targetLength = length || 'short';
 
     function handleChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -51,6 +52,7 @@ export function FormTextBox({value, setValue, length, maxChars, hideInput, name,
             onChange={handleChange}
             name={name}
             disabled={disabled}
+            autoComplete={autocomplete ? 'on' : 'off'}
             $customStyle={customCss}
         />
     );
