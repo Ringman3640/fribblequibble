@@ -26,6 +26,10 @@ const BlobIconContainer = styled.div`
     width: 300px;
     height: 300px;
     z-index: -8;
+
+    @media only screen and (max-width: 480px) {
+        display: none;
+    }
 `;
 
 const QuibbleListStyle = css`

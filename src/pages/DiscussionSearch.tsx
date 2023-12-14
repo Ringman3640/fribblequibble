@@ -16,6 +16,10 @@ const BlobIconContainer = styled.div`
     width: 350px;
     height: 350px;
     z-index: -8;
+    
+    @media only screen and (max-width: 480px) {
+        display: none;
+    }
 `;
 
 const TopicTitle = styled.h1`
