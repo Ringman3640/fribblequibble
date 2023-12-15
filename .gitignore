@@ -23,4 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
+# Ignore all env files except public config and defaults env file
 *.env
+!/.env
