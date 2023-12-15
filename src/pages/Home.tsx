@@ -153,7 +153,7 @@ export default function Home() {
         }
 
         document.addEventListener('scroll', applyArrowIconVisibility);
-        document.title = 'FribbleQuibble'
+        document.title = 'FribbleQuibble';
 
         return () => {
             document.removeEventListener('scroll', applyArrowIconVisibility);
