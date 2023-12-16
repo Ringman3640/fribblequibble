@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { QuibbleInfo } from "../types/QuibbleInfo";
+import { QuibbleContent } from "./QuibbleContent";
 import { QuibbleCondemner } from "./QuibbleCondemner";
 import { formatTimestamp } from "../../../scripts/formatTimestamp";
 import styled from "styled-components";
@@ -83,7 +84,7 @@ export function Quibble({ quibbleInfo, userChoice }: QuibbleProps) {
                     </Link>
                 </FromDiscussionText>
             }
-            <p>{quibbleInfo.content}</p>
+            <QuibbleContent content={quibbleInfo.content}/>
             <DateCondemnRow>
                 <DateDisplay><small>{formatTimestamp(quibbleInfo.timestamp)}</small></DateDisplay>
                 <QuibbleCondemner
