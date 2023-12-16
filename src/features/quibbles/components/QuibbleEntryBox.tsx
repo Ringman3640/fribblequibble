@@ -82,6 +82,10 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
             window.removeEventListener('resize', resizeEntryBoxHeight);
         };
     }, []);
+    
+    useEffect(() => {
+        resizeEntryBoxHeight();
+    }, [quibbleEntry]);
 
     function handleSubmit(event: React.FormEvent) {
         event.preventDefault();
@@ -129,15 +133,6 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
         });
     }
 
-    function handleOnChange(event: React.ChangeEvent<HTMLTextAreaElement>) {
-        let nextValue = event.target.value;
-/*         if (nextValue.length > MAX_QUIBBLE_LEN) {
-            nextValue = event.target.value.substring(0, MAX_QUIBBLE_LEN);
-        } */
-        setQuibbleEntry(nextValue);
-        resizeEntryBoxHeight();
-    }
-
     // Resize the entry box reference height to fit the text contents
     function resizeEntryBoxHeight() {
         if (entryBoxRef.current === null) {
@@ -161,7 +156,7 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
             <textarea 
                 ref={entryBoxRef}
                 name='quibbleTextArea'
-                onChange={handleOnChange}
+                onChange={event => setQuibbleEntry(event.target.value)}
                 placeholder='Add a quibble . . .'
                 value={quibbleEntry}
             />
