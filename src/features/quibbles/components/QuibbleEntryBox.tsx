@@ -4,6 +4,7 @@ import { LoginInfoContext } from "../../auth";
 import { PopupMessageContext } from "../../../contexts/PopupMessageContext";
 import { QuibbleInfo } from "..";
 import { baseSmallButton } from "../../styles";
+import { LoadingRowIcon } from "../../icons";
 import { styled, css } from "styled-components";
 
 const MAX_QUIBBLE_LEN = import.meta.env.VITE_QUIBBLE_MAX_LEN;
@@ -141,6 +142,12 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
         entryBoxRef.current.style.height = '0px';
         const nextHeight = Math.max(entryBoxRef.current.scrollHeight + 20, MIN_ENTRY_BOX_HEIGHT);
         entryBoxRef.current.style.height = nextHeight + 'px';
+    }
+
+    if (loginInfo === undefined) {
+        return (
+            <LoadingRowIcon visibilityDelay={1}/>
+        );
     }
 
     if (loginInfo === null) {
