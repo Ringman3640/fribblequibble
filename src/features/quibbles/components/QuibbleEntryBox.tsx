@@ -134,6 +134,13 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
         });
     }
 
+    function handleKeyDown(event: React.KeyboardEvent) {
+        if (event.key === 'Tab') {
+            // Prevent tab from focusing next form input
+            event.preventDefault();
+        }
+    }
+
     // Resize the entry box reference height to fit the text contents
     function resizeEntryBoxHeight() {
         if (entryBoxRef.current === null) {
@@ -164,6 +171,7 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
                 ref={entryBoxRef}
                 name='quibbleTextArea'
                 onChange={event => setQuibbleEntry(event.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder='Add a quibble . . .'
                 value={quibbleEntry}
             />
