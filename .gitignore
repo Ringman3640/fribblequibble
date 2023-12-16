@@ -25,4 +25,7 @@ dist-ssr
 
 # Ignore all env files except public config and defaults env file
 *.env
-!/.env
+*.env.development
+*.env.production
+!/.env.development
+!/.env.production
