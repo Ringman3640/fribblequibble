@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
+const RemovedText = styled.p`
+    color: ${props => props.theme.tertiaryColor};
+`;
+
 const ContentRegion = styled.div`
     position: relative;
 `;
@@ -65,6 +69,14 @@ export function QuibbleContent({content}: QuibbleContentProps) {
             setContentState(ContentState.Constricted);
         }
     }, []);
+
+    if (content === null) {
+        return (
+            <RemovedText>
+                [ REMOVED ]
+            </RemovedText>
+        );  
+    }
 
     let stateClassName = '';
     if (contentState === ContentState.Constricted) {
