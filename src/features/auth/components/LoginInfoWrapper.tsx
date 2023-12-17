@@ -2,13 +2,7 @@ import { useEffect, useState } from "react";
 import { LoginInfo } from "../types/LoginInfo";
 import { LoginInfoContext } from "../contexts/LoginInfoContext";
 
-interface AccessTokenJWT {
-    id: number,
-    access_level: number,
-    username: string,
-    iat: number,
-    exp: number
-}
+const MS_PER_SECOND: number = 1000;
 
 export function LoginInfoWrapper({children}: React.PropsWithChildren) {
     const [loginInfo, setLoginInfo] = useState<LoginInfo>(undefined);
@@ -18,30 +12,24 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
     }, []);
 
     function refreshLoginInfo(): void {
-        const accessToken: string | null = getCookie('access_token');
+        setLoginInfo(undefined);
 
-        // If an access token is not found, the user is not logged in
-        if (!accessToken) {
-            setLoginInfo(null);
-            return;
-        }
-
-        const jwt: AccessTokenJWT = parseJwt(accessToken);
-        const currTimestampSeconds: number = Math.floor(Date.now() / 1000);
-
-        // If the access token is not expired, accept login info
-        if (jwt.exp > currTimestampSeconds) {
+        // Check if valid login info exists in localstorage
+        const savedLoginInfo = JSON.parse(localStorage.getItem('loginInfo') || '{}');
+        if (savedLoginInfo 
+                && 'id' in savedLoginInfo
+                && Date.now() / MS_PER_SECOND < savedLoginInfo.expTimestamp) {
             setLoginInfo({
-                id: jwt.id,
-                username: jwt.username,
-                accessLevel: jwt.access_level
+                id: savedLoginInfo.id,
+                username: savedLoginInfo.username,
+                accessLevel: savedLoginInfo.accessLevel
             });
             return;
         }
 
-        // Attempt to renew access token
-        fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/renew-access-token`, {
-            method: 'POST',
+        // Try to get login info from backend
+        fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/info`, {
+            method: 'GET',
             credentials: 'include',
             headers: {
                 'Accept': 'application/json',
@@ -53,24 +41,21 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
         })
         .then(json => {
             if ('error' in json) {
-                setLoginInfo(null);
-                return;
+                throw null;
             }
-            const newAccessToken: string | null = getCookie('access_token');
-            if (!newAccessToken) {
-                setLoginInfo(null);
-                return;
-            }
-            const newJwt = parseJwt(newAccessToken);
+            localStorage.setItem('loginInfo', JSON.stringify(json));
             setLoginInfo({
-                id: newJwt.id,
-                username: newJwt.username,
-                accessLevel: newJwt.access_level
+                id: json.id,
+                username: json.username,
+                accessLevel: json.accessLevel
             });
         })
         .catch(err => {
-            console.log(err);
+            if (err) {
+                console.error(err);
+            }
             setLoginInfo(null);
+            localStorage.removeItem('loginInfo');
         });
     }
 
@@ -79,30 +64,4 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
             {children}
         </LoginInfoContext.Provider>
     );
-}
-
-// getCookie
-// 
-// Finds a cookie by name and returns its contents if found. Otherwise, returns
-// null.
-// 
-// Taken from: https://stackoverflow.com/a/52406518
-function getCookie(name: string): string | null {
-    var match = document.cookie.match(RegExp('(?:^|;\\s*)' + name + '=([^;]*)')); 
-    return match ? match[1] : null;
-}
-
-// parseJwt
-// 
-// Decodes an encoded JWT and returns its JSON payload.
-// 
-// Taken from: https://stackoverflow.com/a/38552302
-function parseJwt (token: string): AccessTokenJWT {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-    var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-    }).join(''));
-
-    return JSON.parse(jsonPayload);
 }
