@@ -117,6 +117,9 @@ export function QuibbleEntryBox({ discussionId, handleAddQuibble }: QuibbleEntry
             return res.json();
         })
         .then(json => {
+            if ('error' in json) {
+                throw json;
+            }
             handleAddQuibble(json);
             setQuibbleEntry('');
             setPopupMessage('Quibble sent');
