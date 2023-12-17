@@ -28,19 +28,21 @@ export function SignUpForm() {
             })
             .then(json => {
                 if ('error' in json) {
-                    formInfo.setErrorMsg(json.message);
-                    return;
+                    throw json;
                 }
             });
-        } catch(err) {
-            if (err) {
+        } catch(err: any) {
+            if (err && err.error === 'USERNAME_ALREADY_TAKEN') {
+                formInfo.setErrorMsg('Username is already taken');
+            }
+            else {
                 console.error(err);
                 formInfo.setErrorMsg('Connection failed; please try again later');
             }
             return;
         }
 
-        // Login
+        // Login after account created
         return fetch(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, {
             method: 'POST',
             credentials: 'include',
