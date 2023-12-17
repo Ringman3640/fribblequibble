@@ -17,10 +17,8 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
         refreshLoginInfo();
     }, []);
 
-    async function refreshLoginInfo(): Promise<void> {
-        await new Promise(r => setTimeout(r, 2000));
+    function refreshLoginInfo(): void {
         const accessToken: string | null = getCookie('access_token');
-        console.log('Access Token:', accessToken);
 
         // If an access token is not found, the user is not logged in
         if (!accessToken) {
