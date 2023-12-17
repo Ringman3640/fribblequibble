@@ -30,6 +30,7 @@ const ChoiceAddButton = styled.button`
 
 const ChoiceList = styled.div`
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
     margin-bottom: 30px;
 `;
