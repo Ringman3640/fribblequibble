@@ -27,12 +27,13 @@ interface FormTextAreaProps {
     length?: 'short' | 'medium' | 'maximum',
     height?: 'short' | 'medium' | 'large',
     maxChars?: number,
+    id?: string,
     name?: string,
     disabled?: boolean,
     customCss?: CSSProp
 }
 
-export function FormTextArea({value, setValue, length, height, maxChars, name, disabled, customCss}: FormTextAreaProps) {
+export function FormTextArea({value, setValue, length, height, maxChars, id, name, disabled, customCss}: FormTextAreaProps) {
     function handleChange(event: React.ChangeEvent<HTMLTextAreaElement>): void {
         if (maxChars && event.target.value.length > maxChars) {
             setValue(event.target.value.substring(0, maxChars));
@@ -62,6 +63,7 @@ export function FormTextArea({value, setValue, length, height, maxChars, name, d
             className={lengthName}
             value={value}
             onChange={handleChange}
+            id={id}
             name={name}
             disabled={disabled}
             rows={rowCount}
