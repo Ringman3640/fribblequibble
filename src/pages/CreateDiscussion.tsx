@@ -230,16 +230,16 @@ export default function CreateDiscussion() {
             <PageForm onSubmit={handleSubmit}>
                 <FormLabel htmlFor='titleIn'>Title ({title.length}/{TITLE_MAX_LENGTH})</FormLabel>
                 <FormTextBox
+                    id='titleIn'
                     value={title}
                     setValue={setTitle}
-                    name='titleIn'
                     length='medium'
                     maxChars={TITLE_MAX_LENGTH}
                 />
                 <FormLabel htmlFor='topicIn'>Topic ({topic.length}/{TOPIC_MAX_LENGTH})</FormLabel>
                 <DatalistInput 
+                    id='topicIn'
                     list='topic-list'
-                    name='topicIn'
                     value={topic}
                     onChange={event => setTopic(event.target.value)}
                 />
@@ -250,22 +250,23 @@ export default function CreateDiscussion() {
                 </datalist>
                 <FormLabel htmlFor='descriptionIn'>Description ({description.length}/{DESC_MAX_LENGTH})</FormLabel>
                 <FormTextArea
+                    id='descriptionIn'
                     value={description}
                     setValue={setDescription}
-                    name='descriptionIn'
                     length='medium'
                     maxChars={DESC_MAX_LENGTH}
                 />
                 <FormLabel htmlFor='contentIn'>Content</FormLabel>
                 <FormTextArea
+                    id='contentIn'
                     value={content}
                     setValue={setContent}
-                    name='contentIn'
                     length='maximum'
                     height='large'
                 />
                 <FormLabel htmlFor='choiceIn'>Choices</FormLabel>
                 <FormTextBox
+                    id='choiceIn'
                     value={choiceText}
                     setValue={setChoiceText}
                     customCss={ChoiceTextBoxCss}

@@ -80,17 +80,17 @@ export function UsernamePasswordForm({submitText, onSubmit}: UsernamePasswordFor
         <form onSubmit={handleSubmit}>
             <FormLabel htmlFor='usernameIn'>Username</FormLabel>
             <FormTextBox 
+                id='usernameIn'
                 value={username}
                 setValue={setUsername}
-                name='usernameIn'
                 disabled={waitingForAPI}
                 autocomplete={true}
             />
             <FormLabel htmlFor='passwordIn'>Password</FormLabel>
             <FormTextBox
+                id='passwordIn'
                 value={password}
                 setValue={setPassword}
-                name='passwordIn'
                 disabled={waitingForAPI}
                 hideInput={true}
             />
