@@ -8,23 +8,28 @@ export function LoginInfoWrapper({children}: React.PropsWithChildren) {
     const [loginInfo, setLoginInfo] = useState<LoginInfo>(undefined);
 
     useEffect(() => {
-        refreshLoginInfo();
+        refreshLoginInfo(true);
     }, []);
 
-    function refreshLoginInfo(): void {
+    function refreshLoginInfo(useCachedInfo?: boolean): void {
         setLoginInfo(undefined);
 
-        // Check if valid login info exists in localstorage
-        const savedLoginInfo = JSON.parse(localStorage.getItem('loginInfo') || '{}');
-        if (savedLoginInfo 
-                && 'id' in savedLoginInfo
-                && Date.now() / MS_PER_SECOND < savedLoginInfo.expTimestamp) {
-            setLoginInfo({
-                id: savedLoginInfo.id,
-                username: savedLoginInfo.username,
-                accessLevel: savedLoginInfo.accessLevel
-            });
-            return;
+        // Check if valid login info exists cached in localstorage
+        if (useCachedInfo) {
+            const savedLoginInfo = JSON.parse(localStorage.getItem('loginInfo') || '{}');
+            if (savedLoginInfo 
+                    && 'id' in savedLoginInfo
+                    && Date.now() / MS_PER_SECOND < savedLoginInfo.expTimestamp) {
+                setLoginInfo({
+                    id: savedLoginInfo.id,
+                    username: savedLoginInfo.username,
+                    accessLevel: savedLoginInfo.accessLevel
+                });
+                return;
+            }
+        }
+        else {
+            localStorage.removeItem('loginInfo');
         }
 
         // Try to get login info from backend

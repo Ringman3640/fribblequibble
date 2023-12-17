@@ -3,7 +3,7 @@ import { LoginInfo } from "../types/LoginInfo";
 
 interface LoginInfoContent {
     loginInfo: LoginInfo,
-    refreshLoginInfo: () => void
+    refreshLoginInfo: (useCachedInfo?: boolean) => void
 }
 
 export const LoginInfoContext = createContext<LoginInfoContent>({

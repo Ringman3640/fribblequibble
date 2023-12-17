@@ -67,7 +67,7 @@ interface UtilityMenuProps {
 }
 
 export function UtilityMenu({hidden, customCss}: UtilityMenuProps) {
-    const {loginInfo} = useContext(LoginInfoContext);
+    const {loginInfo, refreshLoginInfo} = useContext(LoginInfoContext);
     const {setPopupMessage} = useContext(PopupMessageContext);
     const navigate = useNavigate();
 
@@ -81,6 +81,7 @@ export function UtilityMenu({hidden, customCss}: UtilityMenuProps) {
             }
         })
         .then(() => {
+            refreshLoginInfo();
             navigate(0); // refresh page
         })
         .catch(err => {
