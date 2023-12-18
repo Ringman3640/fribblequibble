@@ -27,7 +27,7 @@ const MONTH_NUMBER_TO_NAME: Record<number, string> = {
 // older will be direct dates. Dates that are within the current year will not
 // include the year.
 export function formatTimestamp(timestamp: number): string {
-    const timeDelta = Date.now() - (timestamp * MS_PER_SECOND);
+    const timeDelta = Math.max(Date.now() - (timestamp * MS_PER_SECOND), 0);
 
     if (timeDelta > MS_PER_WEEK) {
         const timestampDate = new Date(timestamp * MS_PER_SECOND);
