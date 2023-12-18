@@ -1,5 +1,7 @@
 <div align="center">
-   <img src="./readme-src/front-page.png" style="width:60%"/>
+   <a href="https://www.fribblequibble.com" target="_blank">
+      <img src="./readme-src/front-page.png" style="width:60%"/>
+   </a>
    <p style="font-size: 1000px;">
       <strong>Frontend repository for the FribbleQuibble discussion website.</strong>
    </p>
