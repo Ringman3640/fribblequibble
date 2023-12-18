@@ -14,4 +14,4 @@
 - styled-components
 
 ## Publishing
-The FribbleQuibble frontend website is published through GitHub pages. It is hosted in the `/docs` directory of the repository. Update the site by running `npm run build`, which rebuilds the site in the `/docs` directory, and commit the changes.
+The FribbleQuibble frontend website is published through Netlify which automatically checks for updates from the repository. Any pushes to the `main` branch will launch an automatic rebuild of the site.
