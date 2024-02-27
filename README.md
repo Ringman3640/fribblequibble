@@ -14,4 +14,6 @@
 - styled-components
 
 ## Publishing
-The FribbleQuibble frontend website is published through Netlify which automatically checks for updates from the repository. Any pushes to the `main` branch will launch an automatic rebuild of the site.
+FribbleQuibble was previously hosted on Netlify as a static site. However, due to the recent [news about potential immense charges on the free tier](https://news.ycombinator.com/item?id=39520776), I have removed the frontend site. 
+
+I will likely rehost the site on Cloudflare Pages, but I am unsure when I will have time to do this.
