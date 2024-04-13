@@ -14,6 +14,4 @@
 - styled-components
 
 ## Publishing
-FribbleQuibble was previously hosted on Netlify as a static site. However, due to the recent [news about potential immense charges on the free tier](https://news.ycombinator.com/item?id=39520776), I have removed the frontend site. 
-
-I will likely rehost the site on Cloudflare Pages, but I am unsure when I will have time to do this.
+The FribbleQuibble frontend website is hosted through CloudFlare pages. Any changes to the 'main' branch will automatically initiate a build on CloudFlare that updates the production site.
