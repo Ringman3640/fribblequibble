@@ -7,7 +7,7 @@
    </p>
 </div>
 
-Visit the live site at [fribblequibble.com](fribblequibble.com).
+Visit the live site at [fribblequibble.com](https://www.fribblequibble.com).
 
 The source code repo for the backend server can be found [here](https://github.com/Ringman3640/fribblequibble-backend).
 
